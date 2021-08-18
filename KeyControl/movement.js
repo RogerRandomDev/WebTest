@@ -7,6 +7,15 @@ let ismoving = false
 //position variables//
 var px=0,py=0;
 var cx=64,cy=64;
+//Gets children that have collision from collision Div//
+var collObj
+document.addEventListener('readystatechange', event => { 
+    // When window loaded ( external resources are loaded too- `css`,`src`, etc...) 
+    if (event.target.readyState === "complete") {
+        collObj = document.getElementById("collisionObjects").children
+        console.log(collObj[0].width)
+    }
+});
 //Changes if key is active or not//
 function keyPressed(keyid) {
     if(!keyspressed[keycodes[keyid.key]]){MousePoint.src = "RocketMoving.gif"}
@@ -25,17 +34,30 @@ function keyReleased(keyid) {
 
 
 //Runs functions every set period of time//
-
+let movey = 0
+let movex = 0
+let collisionside = "none"
 window.setInterval(function(){
     py = (keyspressed[0] - keyspressed[1])*4
     px += (keyspressed[3] - keyspressed[2])*4
-    cx += py*Math.cos((px+90)*deg2rad)
-    cy += py*Math.sin((px+90)*deg2rad)
+    movex = py*Math.cos((px+90)*deg2rad)
+    movey = py*Math.sin((px+90)*deg2rad)
+
+    //checks collision with all objects, could probably be more efficient to be honest, but that can be done later//
+    for (let i = 0; i < collObj.length; i++){
+        collisionside = collide(MousePoint,collObj[i])
+        if (collisionside=="top" && movey > 0){movey=0};
+        if (collisionside=="bottom" && movey < 0){movey=0};
+        if (collisionside=="left" && movex > 0){movex=0};
+        if (collisionside=="right" && movex < 0){movex=0};
+    };
+    cx += movex
+    cy += movey
     cx = Math.max(4,cx)
     cx = Math.min(1504,cx)
     cy = Math.min(700,cy)
     cy = Math.max(4, cy)
-    positioner.style.top = cy + "px"
-    positioner.style.left = cx + "px"
+    MousePoint.style.top = cy + "px"
+    MousePoint.style.left = cx + "px"
     MousePoint.style.transform = "rotate("+px+"deg"+")"
 },20)

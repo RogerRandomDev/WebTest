@@ -5,11 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="Collision.js" type="text/javascript"></script>
     <script src="movement.js" type="text/javascript"></script>
 </head>
 <body style="overflow-x: hidden; background-color: rgb(15,15,15);">
     <div id="positioner" style="position: relative;" >
-        <img src="Rocket.png" width="30px" height="40px" id="MousePoint" style="image-rendering: pixelated; left: 64px; top: 64px; transform-origin: center center; background-color: transparent;">
+        <img src="Rocket.png" width="30px" height="40px" id="MousePoint" style="image-rendering: pixelated; left: 64px; top: 64px; transform-origin: center center; background-color: transparent; position:relative">
+    </div>
+    <div id="collisionObjects">
+        <img src="Rocket.png" width="60px" height="80px" style="image-rendering: pixelated; position:absolute; top:256px">
+
     </div>
 </body>
 </html>
