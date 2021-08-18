@@ -13,16 +13,15 @@ document.addEventListener('readystatechange', event => {
     // When window loaded ( external resources are loaded too- `css`,`src`, etc...) 
     if (event.target.readyState === "complete") {
         collObj = document.getElementById("collisionObjects").children
-        console.log(collObj[0].width)
     }
 });
 //Changes if key is active or not//
 function keyPressed(keyid) {
-    if(keycodes[keyid.key]!=null){
-    console.log(keycodes[keyid.key])
-    if(!keyspressed[keycodes[keyid.key]]){MousePoint.src = "./Images/RocketMoving.gif"}
+    //checks if keypressed is a key you move with, if not, does nothing//
+    if(keycodes[keyid.key]!=null){if(!keyspressed[keycodes[keyid.key]]){
+        MousePoint.src = "./Images/RocketMoving.gif"}
+        keyspressed[keycodes[keyid.key]] = true
     }
-    keyspressed[keycodes[keyid.key]] = true
 }
 
 function keyReleased(keyid) {
@@ -48,7 +47,7 @@ window.setInterval(function(){
 
     //checks collision with all objects, could probably be more efficient to be honest, but that can be done later//
     for (let i = 0; i < collObj.length; i++){
-        collisionside = collide(MousePoint,collObj[i],collObj[i].title)
+        collisionside = collide(MousePoint,collObj[i].children[0],collObj[i].title)
         if (collisionside=="top" && movey > 0){movey=0};
         if (collisionside=="bottom" && movey < 0){movey=0};
         if (collisionside=="left" && movex > 0){movex=0};

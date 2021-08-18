@@ -1,4 +1,4 @@
-let r1h = 0, r1w=0
+let r1h = 0, r1w=0;
 function collide(r1,r2,texttoshow){
     r1h = r1.height-r1.height * Math.asin(window.getComputedStyle(r1,null).getPropertyValue("Transform").split(",")[2])/Math.PI
     r1w = r1.height-r1.width * Math.asin(window.getComputedStyle(r1,null).getPropertyValue("Transform").split(",")[2])/Math.PI
