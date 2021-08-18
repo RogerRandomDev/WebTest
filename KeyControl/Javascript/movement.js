@@ -18,7 +18,10 @@ document.addEventListener('readystatechange', event => {
 });
 //Changes if key is active or not//
 function keyPressed(keyid) {
-    if(!keyspressed[keycodes[keyid.key]]){MousePoint.src = "RocketMoving.gif"}
+    if(keycodes[keyid.key]!=null){
+    console.log(keycodes[keyid.key])
+    if(!keyspressed[keycodes[keyid.key]]){MousePoint.src = "./Images/RocketMoving.gif"}
+    }
     keyspressed[keycodes[keyid.key]] = true
 }
 
@@ -29,7 +32,7 @@ function keyReleased(keyid) {
     if(keyspressed[1]) {ismoving=true}
     if(keyspressed[2]) {ismoving=true}
     if(keyspressed[3]) {ismoving=true}
-    if(ismoving==false){MousePoint.src="Rocket.png"}
+    if(ismoving==false){MousePoint.src="./Images/Rocket.png"}
 }
 
 
@@ -45,7 +48,7 @@ window.setInterval(function(){
 
     //checks collision with all objects, could probably be more efficient to be honest, but that can be done later//
     for (let i = 0; i < collObj.length; i++){
-        collisionside = collide(MousePoint,collObj[i])
+        collisionside = collide(MousePoint,collObj[i],collObj[i].title)
         if (collisionside=="top" && movey > 0){movey=0};
         if (collisionside=="bottom" && movey < 0){movey=0};
         if (collisionside=="left" && movex > 0){movex=0};
