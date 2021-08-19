@@ -1,7 +1,5 @@
 let r1h = 0, r1w=0;
 function collide(r1,r2,texttoshow){
-    r1h = r1.height-r1.height * Math.asin(window.getComputedStyle(r1,null).getPropertyValue("Transform").split(",")[2])/Math.PI
-    r1w = r1.height-r1.width * Math.asin(window.getComputedStyle(r1,null).getPropertyValue("Transform").split(",")[2])/Math.PI
     //Does check for if it is a round collision or not, and uses respective formula//
     var dx=(r1.x+r1w/2)-(r2.x+r2.width/2);
     var dy=(r1.y+r1h/2)-(r2.y+r2.height/2);
