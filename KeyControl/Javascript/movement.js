@@ -47,7 +47,7 @@ window.setInterval(function(){
 
     //checks collision with all objects, could probably be more efficient to be honest, but that can be done later//
     for (let i = 0; i < collObj.length; i++){
-        collisionside = collide(MousePoint,collObj[i].children[0],collObj[i].title)
+        collisionside = collide(MousePoint,collObj[i].children[0],collObj[i].title.split("..."))
         if (collisionside=="top" && movey > 0){movey=0};
         if (collisionside=="bottom" && movey < 0){movey=0};
         if (collisionside=="left" && movex > 0){movex=0};
@@ -55,11 +55,11 @@ window.setInterval(function(){
     };
     cx += movex
     cy += movey
-    cx = Math.max(4,cx)
-    cx = Math.min(1504,cx)
-    cy = Math.min(700,cy)
-    cy = Math.max(4, cy)
-    MousePoint.style.top = cy + "px"
-    MousePoint.style.left = cx + "px"
+    cx = Math.max(8,cx)
+    cx = Math.min(2020,cx)
+    cy = Math.min(2020,cy)
+    cy = Math.max(8, cy)
+    positioner.style.top = cy + "px"
+    positioner.style.left = cx + "px"
     MousePoint.style.transform = "rotate("+px+"deg"+")"
 },20)
