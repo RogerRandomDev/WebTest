@@ -12,6 +12,7 @@ document.addEventListener('readystatechange', event => {
     // When window loaded ( external resources are loaded too- `css`,`src`, etc...) 
     if (event.target.readyState === "complete") {
         collObj = document.getElementById("collisionObjects").children
+        window.setInterval(move,20)
     }
 });
 //Changes if key is active or not//
@@ -40,7 +41,6 @@ function keyReleased(keyid) {
 let movey = 0
 let movex = 0
 let collisionside = "none"
-window.setInterval(move,20)
 
 function move(){
     py = (keyspressed[0] - keyspressed[1])*4
@@ -50,7 +50,7 @@ function move(){
     //checks collision with all objects, could probably be more efficient to be honest, but that can be done later//
     for (let i = 0; i < collObj.length; i++){
         //checks if the shape is within 20 pixels of player before doing the math
-        collisionside = (((Math.abs(MousePoint.y-collObj[i].children[0].y)-20<collObj[i].children[0].height)?((Math.abs(MousePoint.x-collObj[i].children[0].x)-20<collObj[i].children[0].width)):false)?collide(MousePoint,collObj[i].children[0],collObj[i].title.split("...")):"none")
+        collisionside = (((Math.abs(MousePoint.y-collObj[i].children[0].y)-20<collObj[i].children[0].height)?((Math.abs(MousePoint.x-collObj[i].children[0].x)-20<collObj[i].children[0].width)):false)?collide(MousePoint,collObj[i].children[0],collObj[i].title.split(",")):"none")
         movey = ((collisionside=="top"&&movey>0)?0:(collisionside=="bottom"&&movey<0)?0:movey)
         movex = ((collisionside=="left"&&movex>0)?0:(collisionside=="right"&&movex<0)?0:movex)
     };
