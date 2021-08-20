@@ -44,21 +44,17 @@ window.setInterval(function(){
     px += (keyspressed[3] - keyspressed[2])*4
     movex = py*Math.cos((px+90)*deg2rad)
     movey = py*Math.sin((px+90)*deg2rad)
-
     //checks collision with all objects, could probably be more efficient to be honest, but that can be done later//
     for (let i = 0; i < collObj.length; i++){
-        collisionside = collide(MousePoint,collObj[i].children[0],collObj[i].title.split("..."))
-        if (collisionside=="top" && movey > 0){movey=0};
-        if (collisionside=="bottom" && movey < 0){movey=0};
-        if (collisionside=="left" && movex > 0){movex=0};
-        if (collisionside=="right" && movex < 0){movex=0};
+        //checks if the shape is within 20 pixels of player before doing the math
+        collisionside = (((Math.abs(MousePoint.y-collObj[i].children[0].y)-20<collObj[i].children[0].height)?((Math.abs(MousePoint.x-collObj[i].children[0].x)-20<collObj[i].children[0].width)):false)?collide(MousePoint,collObj[i].children[0],collObj[i].title.split("...")):"none")
+        movey = ((collisionside=="top"&&movey>0)?0:(collisionside=="bottom"&&movey<0)?0:movey)
+        movex = ((collisionside=="left"&&movex>0)?0:(collisionside=="right"&&movex<0)?0:movex)
     };
     cx += movex
     cy += movey
-    cx = Math.max(8,cx)
-    cx = Math.min(3044,cx)
-    cy = Math.min(2020,cy)
-    cy = Math.max(8, cy)
+    cx = (Math.max(8,Math.min(3044,cx)))
+    cy = (Math.max(8, Math.min(2020,cy)))
     positioner.style.top = cy + "px"
     positioner.style.left = cx + "px"
     MousePoint.style.transform = "rotate("+px+"deg"+")"
