@@ -56,10 +56,12 @@ window.setInterval(function(){
     cx += movex
     cy += movey
     cx = Math.max(8,cx)
-    cx = Math.min(2020,cx)
+    cx = Math.min(3044,cx)
     cy = Math.min(2020,cy)
     cy = Math.max(8, cy)
     positioner.style.top = cy + "px"
     positioner.style.left = cx + "px"
     MousePoint.style.transform = "rotate("+px+"deg"+")"
+    window.scroll(Math.min(cx-window.innerWidth/2,3072-window.innerWidth),cy-window.innerHeight/2)
 },20)
+

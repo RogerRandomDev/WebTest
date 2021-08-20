@@ -5,17 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="./CSS/base.css">
     <script src="./Javascript/Collision.js" type="text/javascript"></script>
     <script src="./Javascript/movement.js" type="text/javascript"></script>
 </head>
-<body style="overflow-x: hidden; background-color: rgb(15,15,15); width: 2048px; height: 2048px;">
+<body class="space">
     <div id="positioner" style="position: relative;">
-        <div id="TextArea" style="z-index:10000; width: 320px; user-select: none; color: rgba(75,75,75,1); position:relative; top: -32px; text-align: center; font-family: fantasy; font-size: 24px; left: -160px;">Testing</div>
+        <div id="TextArea" class="text" style="position:relative; top: -32px; left: -160px;">Testing</div>
         <img src="./Images/Rocket.png" width="30px" height="40px" id="MousePoint" style="image-rendering: pixelated; left: 0px; top: 0px; transform-origin: center center; background-color: transparent; position:absolute; z-index:1000;">
     </div>
     <!--Add all objects with collision here, allows you to insert them rather easily-->
     <div id="collisionObjects">
-        <div title="land...AlphaC-291" style=" position:absolute; top:128px; left:128px;"><img src="./Images/Planet0.png" width="60px" height="60px" style="image-rendering: pixelated;"></div>
+        <div title="land...AlphaC-291" style=" position:absolute; top:512px; left:634px;">
+            <img src="./Images/Planet0.png" width="60px" height="60px" style="image-rendering: pixelated;">
+            <div class="spacetext">INFO</div>
+        </div>
     </div>
 </body>
 </html>

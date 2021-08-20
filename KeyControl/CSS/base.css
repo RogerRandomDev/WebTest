@@ -1,0 +1,25 @@
+.space {
+    overflow-x:hidden;
+    overflow-y:hidden;
+    background-color: rgb(5,5,5);
+    width: 3072px;
+    height: 2048px;
+}
+.text{
+    z-index:10000;
+    width: 320px;
+    user-select: none;
+    color: rgba(75,75,75,1);
+    text-align: center;
+    font-family: fantasy;
+    font-size: 24px;
+}
+.spacetext {
+    z-index:999;
+    width: inherit;
+    user-select: none;
+    color: rgba(75,75,75,1);
+    text-align: center;
+    font-family: fantasy;
+    font-size: 24px;
+}
