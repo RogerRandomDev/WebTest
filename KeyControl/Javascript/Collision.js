@@ -1,6 +1,8 @@
 let r1h = 40, r1w=40;
 const collisionTypeInfo = {
 "land":"Press E to land on: ",
+"gas":"Press E to land on: ",
+"rock":"Press E to land on: ",
 "dock":"Press E to dock with: "
 }
 function collide(r1,r2,texttoshow){

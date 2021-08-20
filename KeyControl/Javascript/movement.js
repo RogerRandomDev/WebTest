@@ -8,7 +8,6 @@ let ismoving = false
 var px=0,py=0;
 var cx=64,cy=64;
 //Gets children that have collision from collision Div//
-var collObj
 document.addEventListener('readystatechange', event => { 
     // When window loaded ( external resources are loaded too- `css`,`src`, etc...) 
     if (event.target.readyState === "complete") {
@@ -23,7 +22,9 @@ function keyPressed(keyid) {
         keyspressed[keycodes[keyid.key]] = true
     }
 }
-
+function setCollision(){
+    collObj = document.getElementById("collisionObjects").children
+}
 function keyReleased(keyid) {
     keyspressed[keycodes[keyid.key]] = false
     ismoving = false
@@ -39,7 +40,9 @@ function keyReleased(keyid) {
 let movey = 0
 let movex = 0
 let collisionside = "none"
-window.setInterval(function(){
+window.setInterval(move,20)
+
+function move(){
     py = (keyspressed[0] - keyspressed[1])*4
     px += (keyspressed[3] - keyspressed[2])*4
     movex = py*Math.cos((px+90)*deg2rad)
@@ -59,5 +62,5 @@ window.setInterval(function(){
     positioner.style.left = cx + "px"
     MousePoint.style.transform = "rotate("+px+"deg"+")"
     window.scroll(Math.min(cx-window.innerWidth/2,3072-window.innerWidth),cy-window.innerHeight/2)
-},20)
+}
 
