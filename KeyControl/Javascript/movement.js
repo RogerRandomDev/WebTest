@@ -62,5 +62,13 @@ function move(){
     positioner.style.left = cx + "px"
     MousePoint.style.transform = "rotate("+px+"deg"+")"
     window.scroll(Math.min(cx-window.innerWidth/2,3072-window.innerWidth),cy-window.innerHeight/2)
+    const stars1 = document.querySelector('.stars1');
+    const stars2 = document.querySelector('.stars2');
+    const stars3 = document.querySelector('.stars3');
+    const yPos = window.scrollY;
+    
+    stars1.style.transform = `translateY(-${yPos*0.5}px)`;
+    stars2.style.transform = `translateY(-${yPos*0.3}px)`;
+    stars3.style.transform = `translateY(-${yPos*0.1}px)`;
 }
 
