@@ -11,7 +11,7 @@ const colorsets = {
     [[63.7,940,100],[63.7,94,130]]],
     "land":[[[73.5,1000,240],[64.7,10000,-300]],
     [[25,5000,180],[20,2000,-75]],
-    [[20,2000,-75],[25,5000,180]]]
+    [[20,2000,100],[25,5000,75]]]
 }
 //goes to all the planets to generate and makes them//
 function grabplanets(){
@@ -48,8 +48,6 @@ function createPlanet(objectID){
     textbelow.className = "spacetext"
     textbelow.style.width = planetbase.width+"px"
     partholder.appendChild(planetpart0)
-    partholder.appendChild(planetpart1)
-    partholder.appendChild(planetpart2)
     planet.appendChild(planetbase)
     planet.appendChild(partholder)
     planet.appendChild(textbelow)

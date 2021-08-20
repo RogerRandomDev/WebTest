@@ -6,7 +6,7 @@ let keycodes = {'s':0,'w':1,'a':2,'d':3}
 let ismoving = false
 //position variables//
 var px=0,py=0;
-var cx=64,cy=64;
+var cx=1024,cy=1024;
 //Gets children that have collision from collision Div//
 document.addEventListener('readystatechange', event => { 
     // When window loaded ( external resources are loaded too- `css`,`src`, etc...) 
