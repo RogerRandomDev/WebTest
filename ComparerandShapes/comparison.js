@@ -50,8 +50,8 @@ function compare(){
                 if(inputs[i].split(",")[0]=="square"){
                     PC =4*inputval
                     area = inputval*inputval
-                    surfacearea = 6*inputval
                     volume = inputval*inputval*inputval
+                    surfacearea = 6*inputval
                 }
                 console.log("Perimeter/Circumference: "+PC+"\nArea: "+area+"\nVolume: "+volume+"\nSurfaceArea: "+surfacearea+"\n")
                 document.getElementById("output").value+="Perimeter/Circumference: "+PC+"\nArea: "+area+"\nVolume: "+volume+"\nSurfaceArea: "+surfacearea+"\n\n"
@@ -59,3 +59,4 @@ function compare(){
         }
 
 }
+console.log("\ncircumference: "+(inputval*2*Math.PI))

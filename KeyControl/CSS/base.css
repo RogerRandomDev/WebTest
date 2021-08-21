@@ -4,6 +4,9 @@
     background-color: rgb(5,5,5);
     width: 3072px;
     height: 2048px;
+    max-height: 2048px;
+    max-width: 3072px;
+    scroll-margin: 0 0;
 }
 .text{
     z-index:10000;
@@ -16,10 +19,15 @@
 }
 .spacetext {
     z-index:999;
-    width:inherit;
     user-select: none;
     color: rgba(75,75,75,1);
     text-align: center;
     font-family: fantasy;
     font-size: 24px;
+}
+.backgroundParallax{
+    z-index: -1;
+    background-repeat:repeat;
+    user-select: none;
+    position: absolute;
 }

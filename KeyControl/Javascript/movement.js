@@ -61,6 +61,10 @@ function move(){
     positioner.style.top = cy + "px"
     positioner.style.left = cx + "px"
     MousePoint.style.transform = "rotate("+px+"deg"+")"
-    window.scroll(Math.min(cx-window.innerWidth/2,3072-window.innerWidth),cy-window.innerHeight/2)
+    window.scroll(Math.min(cx-window.innerWidth/2,3072-window.innerWidth),Math.min(cy-window.innerHeight/2,2056-window.innerHeight))
+    document.getElementById("Parallax").children[0].style.top = -scrollY*0.125-32+"px"
+    document.getElementById("Parallax").children[0].style.left = -scrollX*0.125-32+"px"
+    document.getElementById("Parallax").children[1].style.left = -scrollX*0.0625-32+"px"
+    document.getElementById("Parallax").children[1].style.top = -scrollY*0.0625-32+"px"
 }
 

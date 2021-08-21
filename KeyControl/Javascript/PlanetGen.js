@@ -27,13 +27,18 @@ function createPlanet(objectID){
     const planetbase = document.createElement("img")
     const planetpart0 = document.createElement("img")
     const textbelow = document.createElement("div")
-    const text = document.createTextNode(planet.title.split(",")[2])
+    const text = document.createTextNode(planet.title.split(",")[1])
     textbelow.appendChild(text)
-    partholder.style.display = "inline"
+    partholder.style.position = "absolute"
+    planetbase.position="absolute"
     planetbase.style.margin = "0 auto"
     let colorsetup = planetRange(0,colorsets[planet.title.split(",")[0]].length-1,planet)
     planetbase.style.zIndex = 100
     planetpart0.style.zIndex = 101
+    planetpart0.style.position = "absolute"
+
+    planetbase.style.top=planet.style.top
+    planetbase.style.left=planet.style.left
     planetbase.src = planetparts[planet.title.split(",")[0]][0]
     planetpart0.src = planetparts[planet.title.split(",")[0]][1]
     planetbase.width = planetRange(planetparts["sizes"][planet.title.split(",")[0]][0],planetparts["sizes"][planet.title.split(",")[0]][1],planet)
@@ -41,12 +46,13 @@ function createPlanet(objectID){
     planetpart0.width = planetbase.width;planetpart0.height = planetbase.width
     planetbase.style.imageRendering = "pixelated"
     planetpart0.style.imageRendering = "pixelated"
-    planetpart0.style.position = "relative"
-    planetpart0.style.left = "-"+planetbase.width+"px"
+    planetpart0.style.top="-"+planetbase.width-4+"px"
     planet.width = planetbase.width + "px"
     planet.height = planetbase.width + "px"
     textbelow.className = "spacetext"
-    textbelow.style.width = planetbase.width+"px"
+    textbelow.style.position = "relative"
+    textbelow.style.width = planetbase.width*5+"px"
+    textbelow.style.left = "-"+planetbase.width*2+"px"
     partholder.appendChild(planetpart0)
     planet.appendChild(planetbase)
     planet.appendChild(partholder)
