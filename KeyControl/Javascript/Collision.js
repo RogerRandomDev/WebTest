@@ -1,9 +1,9 @@
 let r1h = 40, r1w=40;
 const collisionTypeInfo = {
-"land":"Press E to land on: ",
-"gas":"Press E to land on: ",
-"rock":"Press E to land on: ",
-"dock":"Press E to dock with: "
+"Supply":"Press E to land on: ",
+"HOME":"Press E to land on: ",
+"INFO":"Press E to land on: ",
+"Defense":"Press E to enter PLANET DEFENSE for: "
 }
 function collide(r1,r2,texttoshow){
     //Does check for if it is a round collision or not, and uses respective formula//
@@ -25,8 +25,11 @@ function collide(r1,r2,texttoshow){
     //if colliding, sets the text color and text on top of the screen to tell you if you can do certain actions//
     if (collision != "none"){
         TextArea.style.color = "rgba( 75, 75, 75, 1)";
-        TextArea.textContent = collisionTypeInfo[texttoshow[0]] + texttoshow[1]
+        TextArea.textContent = collisionTypeInfo[texttoshow[2]] + texttoshow[1]
     }else{
-        TextArea.style.color = "rgba( 75, 75, 75, 0)"}
+        if(collision =="none"){
+        TextArea.style.color = "rgba( 75, 75, 75, 0)"
+        TextArea.textContent = "a"}
+    }
     return(collision);
 }

@@ -22,6 +22,12 @@ function keyPressed(keyid) {
         MousePoint.src = "./Images/RocketMoving.gif"}
         keyspressed[keycodes[keyid.key]] = true
     }
+    if(keyid.key=="e" && TextArea.textContent !="a"){
+        for(let i = 0; i < collObj.length; i++){
+            collisionside = (((Math.abs(MousePoint.y-collObj[i].children[0].y)-20<collObj[i].children[0].height)?((Math.abs(MousePoint.x-collObj[i].children[0].x)-20<collObj[i].children[0].width)):false)?collide(MousePoint,collObj[i].children[0],collObj[i].title.split(",")):"none")
+            if(collisionside !="none"){enterPlanet(collObj[i].title.split(","))}
+        }
+    }
 }
 function setCollision(){
     collObj = document.getElementById("collisionObjects").children
@@ -57,14 +63,16 @@ function move(){
     cx += movex
     cy += movey
     cx = (Math.max(8,Math.min(3044,cx)))
-    cy = (Math.max(8, Math.min(2020,cy)))
+    cy = (Math.max(8, Math.min(1980,cy)))
     positioner.style.top = cy + "px"
     positioner.style.left = cx + "px"
     MousePoint.style.transform = "rotate("+px+"deg"+")"
     window.scroll(Math.min(cx-window.innerWidth/2,3072-window.innerWidth),Math.min(cy-window.innerHeight/2,2056-window.innerHeight))
-    document.getElementById("Parallax").children[0].style.top = -scrollY*0.125-32+"px"
-    document.getElementById("Parallax").children[0].style.left = -scrollX*0.125-32+"px"
-    document.getElementById("Parallax").children[1].style.left = -scrollX*0.0625-32+"px"
-    document.getElementById("Parallax").children[1].style.top = -scrollY*0.0625-32+"px"
+    
+    //sets background parallax effect for 2 layers, used three before, was a bit unecessary as it looked fine otherwise//
+    document.getElementById("Parallax").children[0].style.top = -scrollY*0.0625-32+"px"
+    document.getElementById("Parallax").children[0].style.left = -scrollX*0.0625-32+"px"
+    document.getElementById("Parallax").children[1].style.left = -scrollX*0.03125-332+"px"
+    document.getElementById("Parallax").children[1].style.top = -scrollY*0.03125-432+"px"
 }
 

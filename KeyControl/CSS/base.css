@@ -16,6 +16,8 @@
     text-align: center;
     font-family: fantasy;
     font-size: 24px;
+    min-height: 48px;
+    max-height: 48px;
 }
 .spacetext {
     z-index:999;
@@ -30,4 +32,10 @@
     background-repeat:repeat;
     user-select: none;
     position: absolute;
+}
+.enemyBase{
+    z-index:5;
+    user-select: none;
+    position:absolute;
+    src:url(./Images/MiniGames/PlanetDefense/EnemyShip.png);
 }
