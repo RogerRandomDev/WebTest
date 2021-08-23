@@ -9,14 +9,15 @@
     <script src="./Javascript/Collision.js" type="text/javascript"></script>
     <script src="./Javascript/movement.js" type="text/javascript"></script>
     <script src="./Javascript/PlanetGen.js" type="text/javascript"></script>
+    <script src="./Javascript/Minigames/PlanetDefense/PlanetDefense.js" type="text/javascript">
 </head>
 <body class="space" onload="grabplanets()">
     <div style="z-index: -1; position: relative;" id="Parallax">
         <img id="stars0" style="background-image:url(./Images/ParallaxBackground/stars1.png);" height="3048px" width="4072px" class="backgroundParallax">
-        <img id="stars1" style="z-index:-2; background-image:url(./Images/ParallaxBackground/stars1.png);" height="3048px" width="4072px" class="backgroundParallax">
+        <img id="stars1" style="z-index:-1; background-image:url(./Images/ParallaxBackground/stars1.png);" height="3048px" width="4072px" class="backgroundParallax">
     </div>
     <div id="positioner" style="position: absolute;">
-        <div id="TextArea" class="text" style="position:relative; top: -32px; left: -160px;"></div>
+        <div id="TextArea" class="text" style="position:relative; top: -32px; left: -160px; color: rgba(0,0,0,0);">a</div>
         <img src="./Images/Rocket.png" width="30px" height="40px" id="MousePoint" style=" image-rendering: pixelated; background-color: transparent; position:absolute; z-index:1000;">
     </div>
     <!--Add all objects with collision here, allows you to insert them rather easily-->
@@ -29,6 +30,9 @@
         <div class="generateplanet" id="planet5" title="rock,Au20-Ag45,Supply" style="position:absolute; top:1324px; left: 820px"></div>
         <div class="generateplanet" id="planet6" title="rock,Au20-Ag45,Supply" style="position:absolute; top:946px; left: 1200px"></div>
         <div class="generateplanet" id="planet7" title="rock,Au20-Ag45,Supply" style="position:absolute; top:366px; left: 2620px"></div>
+    </div>
+    <div id="minigameObjects">
+
     </div>
 </body>
 </html>
