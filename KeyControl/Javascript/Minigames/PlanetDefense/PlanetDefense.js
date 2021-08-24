@@ -11,6 +11,19 @@ baseEnemy.style.imageRendering = "pixelated"
 baseEnemy.style.position = "Absolute"
 baseEnemy.style.height = "40px"
 baseEnemy.style.width = "60px"
+//bullet assembler//
+let bullet = document.createElement("img")
+bullet.className="bullet"
+bullet.src="./Images/MiniGames/PlanetDefense/ShipBullet.png"
+bullet.width = "8px"
+bullet.height = "8px"
+bullet.style.imageRendering="pixelated"
+bullet.style.position="absolute"
+bullet.style.height="8px"
+bullet.style.width="8px"
+bullet.attributes.angle=5
+bullet.attributes.shooter="enemy"
+//now the functions//
 window.setInterval(moveEnemy,50)
 let canStart = true
 function startDefense(){
@@ -37,10 +50,25 @@ function moveEnemy(){
         movey = -5*Math.cos(rotation*Math.PI/180)
         movex = 5*Math.sin(rotation*Math.PI/180)
         let dist = Math.sqrt(Math.abs((pPosx-element.style.left.split('px')[0]-1+1)^2+(pPosy-element.style.top.split('px')[0]-1+1)^2))
-        movey = ((dist<10?5*Math.sin(rotation*Math.PI/180):-5*Math.cos(rotation*Math.PI/180)))
-        movex = ((dist<10?5*Math.cos(rotation*Math.PI/180):5*Math.sin(rotation*Math.PI/180)))
+        movey = ((dist<15?5*Math.sin(rotation*Math.PI/180):-5*Math.cos(rotation*Math.PI/180)))
+        movex = ((dist<15?5*Math.cos(rotation*Math.PI/180):5*Math.sin(rotation*Math.PI/180)))
+        let empty = (dist<15 && element.attributes.framestillshoot==0?shootBullet(rotation,[element.style.top.split('px')[0]-1+1,element.style.left.split('px')[0]-1+1],element):null)
+        element.attributes.framestillshoot = (element.attributes.framestillshoot>0?element.attributes.framestillshoot-1:0)
         element.style.top = element.style.top.split('px')[0]-1+1+movey+"px"
         element.style.left = element.style.left.split('px')[0]-1+1+movex+"px"
         element.style.transform = "rotate("+rotation+"deg)"
     }
+    for(const element of document.getElementsByClassName("bullet")){
+        element.attributes.framesleft--
+        if(element.attributes.framesleft==0){element.remove()}
+    }
+}
+function shootBullet(angle,position,element){
+    element.attributes.framestillshoot = 10
+    let newbullet = bullet.cloneNode()
+    newbullet.attributes.framesleft = 20
+    document.getElementById("Misc").appendChild(newbullet)
+    newbullet.attributes.angle = angle
+    newbullet.style.top = position[0]+"px"
+    newbullet.style.left = position[1]+"px"
 }

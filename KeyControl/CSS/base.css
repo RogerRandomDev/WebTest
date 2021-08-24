@@ -39,3 +39,9 @@
     position:absolute;
     src:url(./Images/MiniGames/PlanetDefense/EnemyShip.png);
 }
+.bullet{
+    z-index: 4;
+    position:absolute;
+    user-select: none;
+    src:url(./Images/MiniGames/PlanetDefense/ShipBullet.png);
+}

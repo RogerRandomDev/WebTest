@@ -62,6 +62,7 @@ function compare(){
             for(i of inputs){
                 let output = []
                 let input = [0,0,0,0]
+                (1,2)(3,4)
                 input[0] = parseFloat(i.split("(")[1].split(")")[0].split(",")[0])
                 input[1] = parseFloat(i.split("(")[1].split(")")[0].split(",")[1])
                 input[2] = parseFloat(i.split("(")[2].split(")")[0].split(",")[0])
@@ -78,6 +79,7 @@ function compare(){
                 let output = 0
                 let input0 = 0
                 let input1 = 0
+                
                 input0 = parseFloat(i.split(",")[0])
                 input1 = parseFloat(i.split(",")[1])
                 output = Math.sqrt(input0*input0+input1*input1)
