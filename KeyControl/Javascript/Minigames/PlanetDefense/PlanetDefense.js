@@ -61,8 +61,8 @@ function moveEnemy(){
     for(const element of document.getElementsByClassName("bullet")){
         element.attributes.framesleft--
         if(element.attributes.framesleft==0){element.remove()}
-        element.attributes.position[0] += 8*Math.sin((element.attributes.angle+90)*Math.PI/180)
-        element.attributes.position[1] += 8*Math.cos((element.attributes.angle+90)*Math.PI/180)
+        element.attributes.position[0] -= 8*Math.sin((element.attributes.angle+90)*Math.PI/180)
+        element.attributes.position[1] -= 8*Math.cos((element.attributes.angle+90)*Math.PI/180)
         element.style.top = element.attributes.position[0]+"px"
         element.style.left = element.attributes.position[1]+"px"
     }
