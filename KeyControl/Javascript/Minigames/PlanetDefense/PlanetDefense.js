@@ -61,12 +61,17 @@ function moveEnemy(){
     for(const element of document.getElementsByClassName("bullet")){
         element.attributes.framesleft--
         if(element.attributes.framesleft==0){element.remove()}
+        element.attributes.position[0] += 8*Math.sin((element.attributes.angle+90)*Math.PI/180)
+        element.attributes.position[1] += 8*Math.cos((element.attributes.angle+90)*Math.PI/180)
+        element.style.top = element.attributes.position[0]+"px"
+        element.style.left = element.attributes.position[1]+"px"
     }
 }
 function shootBullet(angle,position,element){
     element.attributes.framestillshoot = 10
     let newbullet = bullet.cloneNode()
-    newbullet.attributes.framesleft = 20
+    newbullet.attributes.position = position
+    newbullet.attributes.framesleft = 40
     document.getElementById("Misc").appendChild(newbullet)
     newbullet.attributes.angle = angle
     newbullet.style.top = position[0]+"px"
