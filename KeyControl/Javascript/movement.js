@@ -7,12 +7,13 @@ let ismoving = false
 //position variables//
 var px=0,py=0;
 var cx=1024,cy=1024;
+var movement
 //Gets children that have collision from collision Div//
 document.addEventListener('readystatechange', event => { 
     // When window loaded ( external resources are loaded too- `css`,`src`, etc...) 
     if (event.target.readyState === "complete") {
         collObj = document.getElementById("collisionObjects").children
-        window.setInterval(move,20)
+        movement = window.setInterval(move,20)
     }
 });
 //Changes if key is active or not//
@@ -28,6 +29,9 @@ function keyPressed(keyid) {
             if(collisionside !="none"){enterPlanet(collObj[i].title.split(","))}
         }
     }
+}
+function loadMotion(){
+    movement = window.setInterval(move,20)
 }
 function setCollision(){
     collObj = document.getElementById("collisionObjects").children

@@ -23,21 +23,53 @@ bullet.style.height="8px"
 bullet.style.width="8px"
 bullet.attributes.angle=5
 bullet.attributes.shooter="enemy"
+//Portal assembler//
+let portal = document.createElement("img")
+portal.className="imageBase"
+portal.width="80px"
+portal.height="80px"
+portal.style.width="80px"
+portal.style.height="80px"
+portal.src="./Images/MiniGames/PlanetDefense/Portal.png"
+portal.id = "portal"
 //now the functions//
 window.setInterval(moveEnemy,50)
 let canStart = true
+let startpoint = [0,0]
+let frame = 0
+let animation
 function startDefense(){
     if(canStart){
+        frame = 0
         score = 0
         enemies = randRange(5,10)
-
-        for(let i = 0; i <enemies; i++){
-            let enemy = baseEnemy.cloneNode()
-            document.getElementById("minigameObjects").appendChild(enemy)
-            enemy.style.left = randRange(50,3000) +"px"
-            enemy.style.top = randRange(50,2000) +"px"
-        }
+        startpoint = [randRange(1000,2000),randRange(500,1500)]
+        clearInterval(movement)
+        document.getElementById("ROOT").style.scrollBehavior = "smooth"
+        let portalObj = portal.cloneNode()
+        document.getElementById("Misc").appendChild(portalObj)
+        portalObj.style.left = startpoint[0]+window.innerWidth/2+"px"
+        portalObj.style.top = startpoint[1]+window.innerHeight/2+"px"
+        portalObj.style.transform = "rotation(45deg) scaleX(1) scaleY(1)"
+        animation = setInterval(portalanim,20)
         canStart = false
+    }
+}
+//Animation for enemies spawning//
+function portalanim(){
+    frame++
+    //this part is making you move at a constant rate, the reason it is long is it includes the parallax as well, dont worry about length please//
+    if(frame<=40){window.scroll(((startpoint[0]-scrollX)*(frame/40)+scrollX),((startpoint[1]-scrollY)*(frame/40)+scrollY));document.getElementById("Parallax").children[0].style.top = -scrollY*0.0625-32+"px";document.getElementById("Parallax").children[0].style.left = -scrollX*0.0625-32+"px";document.getElementById("Parallax").children[1].style.left = -scrollX*0.03125-332+"px";document.getElementById("Parallax").children[1].style.top = -scrollY*0.03125-432+"px"}
+    if(frame>40 && frame<80){document.getElementsById("portal").style.transform = "rotation("+((frame-40))*36+"deg) scaleX("+1+") scaleY("+1+")"}
+    if(frame==80){placeEnemies()}
+    if(frame==120){clearInterval(animation);loadMotion();document.getElementById("ROOT").style.scrollBehavior = "initial";document.getElementsById("portal").remove()}
+}
+function placeEnemies(){
+    for(let i = 0; i <enemies; i++){
+        let enemy = baseEnemy.cloneNode()
+        document.getElementById("minigameObjects").appendChild(enemy)
+        enemy.style.left = startpoint[0]+window.innerWidth/2+randRange(-50,50) +"px"
+        enemy.style.top = startpoint[1]+window.innerHeight/2+randRange(-50,50) +"px"
     }
 }
 
@@ -61,14 +93,14 @@ function moveEnemy(){
     for(const element of document.getElementsByClassName("bullet")){
         element.attributes.framesleft--
         if(element.attributes.framesleft==0){element.remove()}
-        element.attributes.position[0] -= 8*Math.sin((element.attributes.angle+90)*Math.PI/180)
-        element.attributes.position[1] -= 8*Math.cos((element.attributes.angle+90)*Math.PI/180)
+        element.attributes.position[0] -= 16*Math.sin((element.attributes.angle+90)*Math.PI/180)
+        element.attributes.position[1] -= 16*Math.cos((element.attributes.angle+90)*Math.PI/180)
         element.style.top = element.attributes.position[0]+"px"
         element.style.left = element.attributes.position[1]+"px"
     }
 }
 function shootBullet(angle,position,element){
-    element.attributes.framestillshoot = 10
+    element.attributes.framestillshoot = 5
     let newbullet = bullet.cloneNode()
     newbullet.attributes.position = position
     newbullet.attributes.framesleft = 40

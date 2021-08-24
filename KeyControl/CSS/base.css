@@ -45,3 +45,10 @@
     user-select: none;
     src:url(./Images/MiniGames/PlanetDefense/ShipBullet.png);
 }
+.imageBase{
+    z-index: 4;
+    position:absolute;
+    user-select: none;
+    image-rendering: pixelated;
+    src:url(./Images/MiniGames/PlanetDefense/Portal);
+}
