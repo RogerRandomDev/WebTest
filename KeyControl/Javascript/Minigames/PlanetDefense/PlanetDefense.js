@@ -12,14 +12,19 @@ baseEnemy.style.position = "Absolute"
 baseEnemy.style.height = "40px"
 baseEnemy.style.width = "60px"
 window.setInterval(moveEnemy,50)
+let canStart = true
 function startDefense(){
-    score = 0
-    enemies = randRange(5,10)
-    for(let i = 0; i <enemies; i++){
-        let enemy = baseEnemy.cloneNode()
-        document.getElementById("minigameObjects").appendChild(enemy)
-        enemy.style.left = randRange(50,3000) +"px"
-        enemy.style.top = randRange(50,2000) +"px"
+    if(canStart){
+        score = 0
+        enemies = randRange(5,10)
+
+        for(let i = 0; i <enemies; i++){
+            let enemy = baseEnemy.cloneNode()
+            document.getElementById("minigameObjects").appendChild(enemy)
+            enemy.style.left = randRange(50,3000) +"px"
+            enemy.style.top = randRange(50,2000) +"px"
+        }
+        canStart = false
     }
 }
 
@@ -32,8 +37,8 @@ function moveEnemy(){
         movey = -5*Math.cos(rotation*Math.PI/180)
         movex = 5*Math.sin(rotation*Math.PI/180)
         let dist = Math.sqrt(Math.abs((pPosx-element.style.left.split('px')[0]-1+1)^2+(pPosy-element.style.top.split('px')[0]-1+1)^2))
-        movey = ((dist<15?5*Math.sin(rotation*Math.PI/180):-5*Math.cos(rotation*Math.PI/180)))
-        movex = ((dist<15?5*Math.cos(rotation*Math.PI/180):5*Math.sin(rotation*Math.PI/180)))
+        movey = ((dist<10?5*Math.sin(rotation*Math.PI/180):-5*Math.cos(rotation*Math.PI/180)))
+        movex = ((dist<10?5*Math.cos(rotation*Math.PI/180):5*Math.sin(rotation*Math.PI/180)))
         element.style.top = element.style.top.split('px')[0]-1+1+movey+"px"
         element.style.left = element.style.left.split('px')[0]-1+1+movex+"px"
         element.style.transform = "rotate("+rotation+"deg)"

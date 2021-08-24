@@ -11,6 +11,7 @@
 //YOUR CODE HERE
 let mode = 'compare'
 function setmode(newmode){mode=newmode}
+
 //HELP FOR USING THEM: to separate compares: use a comma in between, and enter between each new set
 //for using the SHAPES, enter shape name first, circle or square, then value, enter before each new set
 function compare(){
@@ -57,6 +58,37 @@ function compare(){
                 document.getElementById("output").value+="Perimeter/Circumference: "+PC+"\nArea: "+area+"\nVolume: "+volume+"\nSurfaceArea: "+surfacearea+"\n\n"
             }
         }
-
+        if(mode=="points"){
+            for(i of inputs){
+                let output = []
+                let input = [0,0,0,0]
+                input[0] = parseFloat(i.split("(")[1].split(")")[0].split(",")[0])
+                input[1] = parseFloat(i.split("(")[1].split(")")[0].split(",")[1])
+                input[2] = parseFloat(i.split("(")[2].split(")")[0].split(",")[0])
+                input[3] = parseFloat(i.split("(")[2].split(")")[0].split(",")[1])
+                let difx=(input[2]-input[0])
+                let dify=(input[3]-input[1])
+                output = Math.sqrt(difx*difx+dify*dify)
+                document.getElementById("output").value+=output+"\n"
+                
+            }
+        }
+        if(mode=="hypotenuse"){
+            for(i of inputs){
+                let output = 0
+                let input0 = 0
+                let input1 = 0
+                input0 = parseFloat(i.split(",")[0])
+                input1 = parseFloat(i.split(",")[1])
+                output = Math.sqrt(input0*input0+input1*input1)
+                document.getElementById("output").value+=output+"\n"
+            }
+        }
+        if(mode=="remainder"){
+            for(i of inputs){
+                let output = 0
+                output = parseFloat(i.split(",")[0]) % parseFloat(i.split("%")[1])
+                document.getElementById("output").value+=(parseFloat(i.split(",")[0])-output)+"R"+output+"\n"
+            }
+        }
 }
-console.log("\ncircumference: "+(inputval*2*Math.PI))
