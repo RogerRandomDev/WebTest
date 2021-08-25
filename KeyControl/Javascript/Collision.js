@@ -23,13 +23,15 @@ function collide(r1,r2,texttoshow){
         }
     }
     //if colliding, sets the text color and text on top of the screen to tell you if you can do certain actions//
-    if (collision != "none"){
-        TextArea.style.color = "rgba( 75, 75, 75, 1)";
-        TextArea.textContent = collisionTypeInfo[texttoshow[2]] + texttoshow[1]
-    }else{
-        if(collision =="none"){
-        TextArea.style.color = "rgba( 75, 75, 75, 0)"
-        TextArea.textContent = "a"}
+    if(texttoshow!=null){
+        if (collision != "none"){
+            TextArea.style.color = "rgba( 75, 75, 75, 1)";
+            TextArea.textContent = collisionTypeInfo[texttoshow[2]] + texttoshow[1]
+        }else{
+            if(collision =="none"){
+            TextArea.style.color = "rgba( 75, 75, 75, 0)"
+            TextArea.textContent = "a"}
+        }
     }
     return(collision);
 }

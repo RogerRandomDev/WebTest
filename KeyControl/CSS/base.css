@@ -7,6 +7,7 @@
     max-height: 2048px;
     max-width: 3072px;
     scroll-margin: 0 0;
+    user-select: none;
 }
 .text{
     z-index:10000;
@@ -38,6 +39,9 @@
     user-select: none;
     position:absolute;
     src:url(./Images/MiniGames/PlanetDefense/EnemyShip.png);
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 .bullet{
     z-index: 4;
@@ -52,3 +56,4 @@
     image-rendering: pixelated;
     src:url(./Images/MiniGames/PlanetDefense/Portal);
 }
+.player{user-select: none;}
