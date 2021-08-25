@@ -43,6 +43,7 @@ function startDefense(){
     if(canStart){
         frame = 0
         score = 0
+        document.getElementById("MousePoint").setAttribute("health",100)
         enemies = randRange(5,10)
         startpoint = [randRange(1000,2000),randRange(500,1500)]
         clearInterval(movement)
@@ -89,7 +90,7 @@ function moveEnemy(){
         movey = ((dist<120?(dist<100?5*Math.sin(rotation*Math.PI/180)+Math.PI/4:5*Math.sin((rotation*Math.PI/180))):5*Math.sin((rotation*Math.PI/180)-Math.PI/2)))
         movex = ((dist<120?(dist<100?5*Math.cos(rotation*Math.PI/180)+Math.PI/4:5*Math.cos((rotation*Math.PI/180))):5*Math.cos((rotation*Math.PI/180)-Math.PI/2)))
         
-        let empty = (dist<120 && element.attributes.framestillshoot==0?shootBullet(rotation,[element.style.top.split('px')[0]-1+1,element.style.left.split('px')[0]-1+1],element):null)
+        let empty = (dist<300 && element.attributes.framestillshoot==0?shootBullet(rotation,[element.style.top.split('px')[0]-1+1,element.style.left.split('px')[0]-1+1],element):null)
         element.attributes.framestillshoot = (element.attributes.framestillshoot>0?element.attributes.framestillshoot-1:0)
         element.attributes.pos[0] += movex
         element.attributes.pos[1] += movey
@@ -107,17 +108,16 @@ function moveEnemy(){
         element.style.left = element.attributes.position[1]+20+"px"
         for(const targets of document.getElementsByClassName(element.attributes.target)){
             let collision = collide(element,targets)
-            console.log(targets.attributes.health)
-            if(collision!="none"){targets.attributes.health--;if(targets.attributes.health==0){targets.remove()}}
+            if(collision!="none"){targets.setAttribute("health",targets.getAttribute("health")-1);element.remove()}
         }
     }
 }
 function shootBullet(angle,position,element){
-    element.attributes.framestillshoot = 5
+    element.attributes.framestillshoot = 20
     let newbullet = bullet.cloneNode()
     newbullet.attributes.position = position
     newbullet.attributes.framesleft = 40
-    newbullet.attributes.target="enemyBase"
+    newbullet.attributes.target="player"
     document.getElementById("Misc").appendChild(newbullet)
     newbullet.attributes.angle = angle
     newbullet.style.top = position[0]+"px"

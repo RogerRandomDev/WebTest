@@ -8,6 +8,17 @@ let ismoving = false
 var px=0,py=0;
 var cx=1024,cy=1024;
 var movement
+let Pbullet = document.createElement("img")
+Pbullet.className="bullet"
+Pbullet.src="./Images/MiniGames/PlanetDefense/ShipBullet.png"
+Pbullet.width = "8px"
+Pbullet.height = "8px"
+Pbullet.style.imageRendering="pixelated"
+Pbullet.style.position="absolute"
+Pbullet.style.height="8px"
+Pbullet.style.width="8px"
+Pbullet.attributes.angle=5
+Pbullet.attributes.target="enemyBase"
 //Gets children that have collision from collision Div//
 document.addEventListener('readystatechange', event => { 
     // When window loaded ( external resources are loaded too- `css`,`src`, etc...) 
@@ -28,6 +39,9 @@ function keyPressed(keyid) {
             collisionside = (((Math.abs(MousePoint.y-collObj[i].children[0].y)-20<collObj[i].children[0].height)?((Math.abs(MousePoint.x-collObj[i].children[0].x)-20<collObj[i].children[0].width)):false)?collide(MousePoint,collObj[i].children[0],collObj[i].title.split(",")):"none")
             if(collisionside !="none"){enterPlanet(collObj[i].title.split(","))}
         }
+    }
+    if(keyid.key==" "){
+        shootBullet(px,[cy+30,cx+30],null)
     }
 }
 function loadMotion(){
@@ -53,6 +67,7 @@ let movex = 0
 let collisionside = "none"
 
 function move(){
+    MousePoint.attributes.framestillshoot--
     py = (keyspressed[0] - keyspressed[1])*4
     px += (keyspressed[3] - keyspressed[2])*4
     movex = py*Math.cos((px+90)*deg2rad)
@@ -80,3 +95,14 @@ function move(){
     document.getElementById("Parallax").children[1].style.top = -scrollY*0.03125-432+"px"
 }
 
+function shootBullet(angle,position,element){
+    if(element != null){element.attributes.framestillshoot = 50}
+    let newbullet = Pbullet.cloneNode()
+    newbullet.attributes.angle = angle
+    newbullet.style.top = position[0]+"px"
+    newbullet.style.left = position[1]+"px"
+    newbullet.attributes.position = position
+    newbullet.attributes.framesleft = 40
+    newbullet.attributes.target="enemyBase"
+    document.getElementById("Misc").appendChild(newbullet)
+}
