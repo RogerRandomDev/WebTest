@@ -41,7 +41,7 @@ function keyPressed(keyid) {
         }
     }
     if(keyid.key==" "){
-        shootBullet(px,[cy+30,cx+30],null)
+        shootBullets(px,[cy+30,cx+30],null)
     }
 }
 function loadMotion(){
@@ -95,7 +95,7 @@ function move(){
     document.getElementById("Parallax").children[1].style.top = -scrollY*0.03125-432+"px"
 }
 
-function shootBullet(angle,position,element){
+function shootBullets(angle,position,element){
     if(element != null){element.attributes.framestillshoot = 50}
     let newbullet = Pbullet.cloneNode()
     newbullet.attributes.angle = angle

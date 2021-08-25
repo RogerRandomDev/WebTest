@@ -18,12 +18,12 @@ bullet.className="bullet"
 bullet.src="./Images/MiniGames/PlanetDefense/ShipBullet.png"
 bullet.width = "8px"
 bullet.height = "8px"
+bullet.attributes.target="player"
 bullet.style.imageRendering="pixelated"
 bullet.style.position="absolute"
 bullet.style.height="8px"
 bullet.style.width="8px"
 bullet.attributes.angle=5
-bullet.attributes.target="enemyBase"
 //Portal assembler//
 let portal = document.createElement("img")
 portal.className="imageBase"
@@ -84,7 +84,7 @@ function placeEnemies(){
 function moveEnemy(){
     let movex = 0,movey = 0,rotation = 0;
     let pPosx = cx, pPosy = cy;
-    for(const element of document.getElementById("minigameObjects").children){
+    for(var element of document.getElementById("minigameObjects").children){
         rotation = (Math.atan2(pPosy+40-element.style.top.split('px')[0]-1+1,pPosx-20-element.style.left.split('px')[0]-1+1)+Math.PI/2)*(180/Math.PI)
         let dist = Math.sqrt(Math.pow(cx-element.attributes.pos[0],2)+Math.pow(cy-element.attributes.pos[1],2))
         movey = ((dist<120?(dist<100?5*Math.sin(rotation*Math.PI/180)+Math.PI/4:5*Math.sin((rotation*Math.PI/180))):5*Math.sin((rotation*Math.PI/180)-Math.PI/2)))
@@ -97,7 +97,7 @@ function moveEnemy(){
         element.style.top = element.attributes.pos[1]+"px"
         element.style.left = element.attributes.pos[0]+"px"
         element.style.transform = "rotate("+rotation+"deg)"
-        if(element.attributes.health==0){element.remove}
+        if(element.attributes.health<=0){element.remove()}
     }
     for(const element of document.getElementsByClassName("bullet")){
         element.attributes.framesleft--
@@ -108,7 +108,7 @@ function moveEnemy(){
         element.style.left = element.attributes.position[1]+20+"px"
         for(const targets of document.getElementsByClassName(element.attributes.target)){
             let collision = collide(element,targets)
-            if(collision!="none"){targets.setAttribute("health",targets.getAttribute("health")-1);element.remove()}
+            if(collision!="none"){targets.setAttribute("health",targets.getAttribute("health")-1);if(targets.getAttribute("health")<=0){targets.remove()};element.remove()}
         }
     }
 }
@@ -117,7 +117,7 @@ function shootBullet(angle,position,element){
     let newbullet = bullet.cloneNode()
     newbullet.attributes.position = position
     newbullet.attributes.framesleft = 40
-    newbullet.attributes.target="player"
+    newbullet.attributes.target = "player"
     document.getElementById("Misc").appendChild(newbullet)
     newbullet.attributes.angle = angle
     newbullet.style.top = position[0]+"px"
