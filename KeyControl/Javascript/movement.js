@@ -41,7 +41,7 @@ function keyPressed(keyid) {
         }
     }
     if(keyid.key==" "){
-        shootBullets(px,[cy+30,cx+30],null)
+        shootBullets(px,[cy+40,cx-7.5],null)
     }
 }
 function loadMotion(){
@@ -67,7 +67,7 @@ let movex = 0
 let collisionside = "none"
 
 function move(){
-    MousePoint.attributes.framestillshoot--
+
     py = (keyspressed[0] - keyspressed[1])*4
     px += (keyspressed[3] - keyspressed[2])*4
     movex = py*Math.cos((px+90)*deg2rad)

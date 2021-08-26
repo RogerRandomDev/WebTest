@@ -5,13 +5,13 @@ let score = 0
 let baseEnemy = document.createElement("img")
 baseEnemy.className="enemyBase"
 baseEnemy.src="./Images/MiniGames/PlanetDefense/EnemyShip.png"
-baseEnemy.width="60px"
-baseEnemy.height="40px"
+baseEnemy.width="120px"
+baseEnemy.height="80px"
 baseEnemy.style.imageRendering = "pixelated"
 baseEnemy.style.position = "Absolute"
-baseEnemy.style.height = "40px"
-baseEnemy.style.width = "60px"
-baseEnemy.attributes.health = 1
+baseEnemy.style.height = "80px"
+baseEnemy.style.width = "120px"
+baseEnemy.attributes.health = 10
 //bullet assembler//
 let bullet = document.createElement("img")
 bullet.className="bullet"
@@ -34,7 +34,7 @@ portal.style.height="80px"
 portal.src="./Images/MiniGames/PlanetDefense/Portal.png"
 portal.id = "portal"
 //now the functions//
-window.setInterval(moveEnemy,50)
+var moveinterval
 let canStart = true
 let startpoint = [0,0]
 let frame = 0
@@ -44,7 +44,7 @@ function startDefense(){
         frame = 0
         score = 0
         document.getElementById("MousePoint").setAttribute("health",100)
-        enemies = randRange(5,10)
+        enemies = 1
         startpoint = [randRange(1000,2000),randRange(500,1500)]
         clearInterval(movement)
         document.getElementById("ROOT").style.scrollBehavior = "smooth"
@@ -54,6 +54,7 @@ function startDefense(){
         portalObj.style.top = startpoint[1]+window.innerHeight/2+"px"
         portalObj.style.transform = "rotate(0deg) scaleX(0) scaleY(0)"
         animation = setInterval(portalanim,20)
+        moveinterval = window.setInterval(moveEnemy,50)
         canStart = false
     }
 }
@@ -72,9 +73,9 @@ function portalanim(){
 function placeEnemies(){
     for(let i = 0; i <enemies; i++){
         let enemy = baseEnemy.cloneNode()
-        enemy.attributes.health = 1
+        enemy.setAttribute("health",10)
         document.getElementById("minigameObjects").appendChild(enemy)
-        enemy.attributes.pos = [startpoint[0]+window.innerWidth/2+randRange(-50,50),startpoint[1]+window.innerHeight/2+randRange(-50,50)]
+        enemy.attributes.pos = [startpoint[0]+window.innerWidth/2,startpoint[1]+window.innerHeight/2]
         enemy.style.left = enemy.attributes.pos[0] +"px"
         enemy.style.top =  enemy.attributes.pos[1]+"px"
     }
@@ -82,22 +83,27 @@ function placeEnemies(){
 
 //enemy movement goes here//
 function moveEnemy(){
+    if(enemies==0 && canStart==false){canStart=true;playFinish()}
     let movex = 0,movey = 0,rotation = 0;
     let pPosx = cx, pPosy = cy;
+    if(enemies>0){
     for(var element of document.getElementById("minigameObjects").children){
-        rotation = (Math.atan2(pPosy+40-element.style.top.split('px')[0]-1+1,pPosx-20-element.style.left.split('px')[0]-1+1)+Math.PI/2)*(180/Math.PI)
+        if(element.getAttribute('health')<=0){enemies--;if(enemies!=0){element.remove()}}
+        rotation = Math.round((Math.atan2(pPosy+40-element.style.top.split('px')[0]-1+1,pPosx-20-element.style.left.split('px')[0]-1+1)+Math.PI/2)*(180/Math.PI)/5)*5
         let dist = Math.sqrt(Math.pow(cx-element.attributes.pos[0],2)+Math.pow(cy-element.attributes.pos[1],2))
-        movey = ((dist<120?(dist<100?5*Math.sin(rotation*Math.PI/180)+Math.PI/4:5*Math.sin((rotation*Math.PI/180))):5*Math.sin((rotation*Math.PI/180)-Math.PI/2)))
-        movex = ((dist<120?(dist<100?5*Math.cos(rotation*Math.PI/180)+Math.PI/4:5*Math.cos((rotation*Math.PI/180))):5*Math.cos((rotation*Math.PI/180)-Math.PI/2)))
-        
-        let empty = (dist<300 && element.attributes.framestillshoot==0?shootBullet(rotation,[element.style.top.split('px')[0]-1+1,element.style.left.split('px')[0]-1+1],element):null)
+        //movey = ((dist<120?(dist<100?5*Math.sin(rotation*Math.PI/180)+Math.PI/4:5*Math.sin((rotation*Math.PI/180))):5*Math.sin((rotation*Math.PI/180)-Math.PI/2)))
+        //movex = ((dist<120?(dist<100?5*Math.cos(rotation*Math.PI/180)+Math.PI/4:5*Math.cos((rotation*Math.PI/180))):5*Math.cos((rotation*Math.PI/180)-Math.PI/2)))
+        movey = ((dist<120?5*Math.sin((rotation*Math.PI/180)):5*Math.sin((rotation*Math.PI/180)-Math.PI/2)))
+        movex = ((dist<120?5*Math.cos((rotation*Math.PI/180)):5*Math.cos((rotation*Math.PI/180)-Math.PI/2)))
+
+        let empty = (dist<300 && element.attributes.framestillshoot==0?shootBullet(rotation,[element.style.top.split('px')[0]-1+11,element.style.left.split('px')[0]-1+21],element):null)
         element.attributes.framestillshoot = (element.attributes.framestillshoot>0?element.attributes.framestillshoot-1:0)
         element.attributes.pos[0] += movex
         element.attributes.pos[1] += movey
         element.style.top = element.attributes.pos[1]+"px"
         element.style.left = element.attributes.pos[0]+"px"
         element.style.transform = "rotate("+rotation+"deg)"
-        if(element.attributes.health<=0){element.remove()}
+    }
     }
     for(const element of document.getElementsByClassName("bullet")){
         element.attributes.framesleft--
@@ -108,12 +114,12 @@ function moveEnemy(){
         element.style.left = element.attributes.position[1]+20+"px"
         for(const targets of document.getElementsByClassName(element.attributes.target)){
             let collision = collide(element,targets)
-            if(collision!="none"){targets.setAttribute("health",targets.getAttribute("health")-1);if(targets.getAttribute("health")<=0){targets.remove()};element.remove()}
+            if(collision!="none"){targets.setAttribute("health",targets.getAttribute("health")-1);element.remove()}
         }
     }
 }
 function shootBullet(angle,position,element){
-    element.attributes.framestillshoot = 20
+    element.attributes.framestillshoot = 5
     let newbullet = bullet.cloneNode()
     newbullet.attributes.position = position
     newbullet.attributes.framesleft = 40
@@ -122,4 +128,20 @@ function shootBullet(angle,position,element){
     newbullet.attributes.angle = angle
     newbullet.style.top = position[0]+"px"
     newbullet.style.left = position[1]+"px"
+}
+//Finished Animation
+var goalx=0,goaly=0;
+function playFinish(){
+    frame = 0
+    animation = window.setInterval(finishAnim,50)
+    clearInterval(movement)
+    goaly = document.getElementById("minigameObjects").children[0].style.top.split("px")[0]-1+1
+    goalx = document.getElementById("minigameObjects").children[0].style.left.split("px")[0]-1+1
+}
+function finishAnim(){
+    frame++
+    document.getElementById("minigameObjects").children[0].style.transform = ""
+    if(frame<=20){window.scroll((goalx-scrollX-window.innerWidth)*(frame/20)+scrollX,(goaly-scrollY-window.innerHeight)*(frame/20)+scrollY)}
+    if(frame>40 && frame <100){document.getElementById("minigameObjects").children[0].style.transform += "rotate("+((frame-40)/10)*360+"deg)"}
+    if(frame>=100){for(const enemy of document.getElementById("minigameObjects").children){enemy.remove()};loadMotion();clearInterval(animation)}
 }
