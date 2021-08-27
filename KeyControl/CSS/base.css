@@ -54,9 +54,17 @@
     position:absolute;
     user-select: none;
     image-rendering: pixelated;
-    src:url(./Images/MiniGames/PlanetDefense/Portal);
+    src:url(./Images/MiniGames/PlanetDefense/Portal.png);
 }
 .generatePlanet{
     user-select: none;
 };
+.enemyOrbs{
+    z-index: 4;
+    position:absolute;
+    user-select: none;
+    image-rendering: pixelated;
+    src:url(./Images/MiniGames/PlanetDefense/EnemyOrb.png);
+    transform-origin: 50% 50%;
+}
 .player{user-select: none;}

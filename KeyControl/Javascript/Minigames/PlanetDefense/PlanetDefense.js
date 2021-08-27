@@ -2,6 +2,7 @@
 //major part of script is likely the enemy movement//
 let enemies = 0
 let score = 0
+//enemy builder//
 let baseEnemy = document.createElement("img")
 baseEnemy.className="enemyBase"
 baseEnemy.src="./Images/MiniGames/PlanetDefense/EnemyShip.png"
@@ -12,6 +13,16 @@ baseEnemy.style.position = "Absolute"
 baseEnemy.style.height = "80px"
 baseEnemy.style.width = "120px"
 baseEnemy.attributes.health = 10
+//enemy orb builder//
+let enemyOrb = document.createElement("img")
+enemyOrb.className = "enemyOrbs"
+enemyOrb.src="./Images/MiniGames/PlanetDefense/EnemyOrb.png"
+enemyOrb.style.imageRendering = "pixelated"
+enemyOrb.style.width = "24px"
+enemyOrb.style.height = "24px"
+enemyOrb.style.src = "./Images/MiniGames/PlanetDefense/EnemyOrb.png"
+enemyOrb.style.zIndex = 10
+enemyOrb.style.position="absolute"
 //bullet assembler//
 let bullet = document.createElement("img")
 bullet.className="bullet"
@@ -33,12 +44,23 @@ portal.style.width="80px"
 portal.style.height="80px"
 portal.src="./Images/MiniGames/PlanetDefense/Portal.png"
 portal.id = "portal"
+//Shield Assembler//
+let shield = document.createElement("img")
+shield.className="imageBase"
+shield.id = "enemyShield"
+shield.style.width = "240px"
+shield.style.height= "240px"
+shield.src="./Images/MiniGames/PlanetDefense/EnemyShield.png"
+shield.style.opacity = "0.5"
+shield.zIndex = '100000'
+shield.style.src = "url(./Images/MiniGames/PlanetDefense/EnemyShield.png)"
 //now the functions//
 var moveinterval
 let canStart = true
 let startpoint = [0,0]
 let frame = 0
 let animation
+let currentOrbs = 0
 moveinterval = window.setInterval(moveEnemy,50)
 function startDefense(){
     if(canStart){
@@ -58,18 +80,6 @@ function startDefense(){
         canStart = false
     }
 }
-//Animation for enemies spawning//
-function portalanim(){
-    frame++
-    //this part is making you move at a constant rate, the reason it is long is it includes the parallax as well, dont worry about length please//
-    if(frame<=40){window.scroll(((startpoint[0]-scrollX)*(frame/40)+scrollX),((startpoint[1]-scrollY)*(frame/40)+scrollY))}
-    if(frame<=200){document.getElementById("portal").style.transform = "rotate("+((frame)*9)+"deg) "}
-    if(frame <= 55){document.getElementById("portal").style.transform += "scaleX("+Math.max((frame-40)/15,0)+") scaleY("+Math.max((frame-40)/15,0)+") "}
-    if(frame==120){placeEnemies()}
-    if(frame>=135){document.getElementById("portal").style.transform += "scaleX("+Math.max(1-(frame-135)/15,0)+") scaleY("+Math.max(1-(frame-135)/15,0)+") "}
-    if(frame>=160){window.scroll((((cx-window.innerWidth/2)-scrollX)*((frame-160)/40)+scrollX),(((cy-window.innerHeight/2)-scrollY)*((frame-160)/40)+scrollY))}
-    if(frame==200){clearInterval(animation);loadMotion();document.getElementById("ROOT").style.scrollBehavior = "initial";document.getElementById("portal").remove()}
-}
 function placeEnemies(){
     for(let i = 0; i <enemies; i++){
         let enemy = baseEnemy.cloneNode()
@@ -78,6 +88,22 @@ function placeEnemies(){
         enemy.attributes.pos = [startpoint[0]+window.innerWidth/2,startpoint[1]+window.innerHeight/2]
         enemy.style.left = enemy.attributes.pos[0] +"px"
         enemy.style.top =  enemy.attributes.pos[1]+"px"
+        currentOrbs = 5
+        for(let i = 0; i<currentOrbs;i++){
+            let Orb = enemyOrb.cloneNode()
+            document.getElementById("minigameObjects").appendChild(Orb)
+            Orb.style.top = (enemy.attributes.pos[1]-(Math.sin(Math.PI*2/3)*64))+"px"
+            Orb.style.left = (enemy.attributes.pos[0]-(Math.cos(Math.PI*2/3)*64))+"px"
+            Orb.attributes.orbID = i+1
+            Orb.attributes.rotation = (360/currentOrbs)*i
+        }
+        let enemyShld = shield.cloneNode()
+        enemyShld.attributes.timeTillDisabled = 20
+        document.getElementById("minigameObjects").appendChild(enemyShld)
+        enemyShld.style.top=enemy.attributes.pos[1]+40+"px"
+        enemyShld.style.left=enemy.attributes.pos[0]+60+"px"
+        enemyShld.style.position = "absolute"
+        enemyShld.style.zIndex = 100000
     }
 }
 
@@ -87,7 +113,7 @@ function moveEnemy(){
     let movex = 0,movey = 0,rotation = 0;
     let pPosx = cx, pPosy = cy;
     if(enemies>0){
-    for(var element of document.getElementById("minigameObjects").children){
+    for(var element of document.getElementsByClassName("enemyBase")){
         if(element.getAttribute('health')<=0){enemies--;if(enemies!=0){element.remove()}}
         rotation = Math.round((Math.atan2(pPosy+40-element.style.top.split('px')[0]-1+1,pPosx-20-element.style.left.split('px')[0]-1+1)+Math.PI/2)*(180/Math.PI)/5)*5
         let dist = Math.sqrt(Math.pow(cx-element.attributes.pos[0],2)+Math.pow(cy-element.attributes.pos[1],2))
@@ -96,13 +122,21 @@ function moveEnemy(){
         movey = ((dist<120?5*Math.sin((rotation*Math.PI/180)):5*Math.sin((rotation*Math.PI/180)-Math.PI/2)))
         movex = ((dist<120?5*Math.cos((rotation*Math.PI/180)):5*Math.cos((rotation*Math.PI/180)-Math.PI/2)))
 
-        let empty = (dist<300 && element.attributes.framestillshoot==0?shootBullet(rotation,[element.style.top.split('px')[0]-1+11,element.style.left.split('px')[0]-1+21],element):null)
+        //let empty = (dist<300 && element.attributes.framestillshoot==0?shootBullet(rotation,[element.style.top.split('px')[0]-1+11,element.style.left.split('px')[0]-1+21],element):null)
         element.attributes.framestillshoot = (element.attributes.framestillshoot>0?element.attributes.framestillshoot-1:0)
         element.attributes.pos[0] += movex
         element.attributes.pos[1] += movey
         element.style.top = element.attributes.pos[1]+"px"
         element.style.left = element.attributes.pos[0]+"px"
         element.style.transform = "rotate("+rotation+"deg)"
+        for(var eOrbs of document.getElementsByClassName("enemyOrbs")){
+            eOrbs.attributes.rotation+=5
+            eOrbs.style.top = 40+element.attributes.pos[1]+Math.sin((eOrbs.attributes.rotation)*Math.PI/180)*120+"px"
+            eOrbs.style.left = 55+element.attributes.pos[0]+Math.cos((eOrbs.attributes.rotation)*Math.PI/180)*120+"px"
+        }
+        //sets shield position//
+        document.getElementById("enemyShield").style.top=element.attributes.pos[1]-70+"px"
+        document.getElementById("enemyShield").style.left=element.attributes.pos[0]-50+"px"
     }
     }
     for(const element of document.getElementsByClassName("bullet")){
@@ -146,5 +180,17 @@ function finishAnim(){
     if(frame>50 && frame <80){document.getElementById("minigameObjects").children[0].style.transform += "scaleX("+(1-((frame-50)/30))*100+"%) scaleY("+(1-((frame-50)/30))*100+"%)"}
     if(frame>=80){document.getElementById("minigameObjects").children[0].style.transform +="scaleX(0%) scaleY(0%)"}
     if(frame>=80){window.scroll((((cx-window.innerWidth/2)-scrollX)*((frame-80)/20)+scrollX),(((cy-window.innerHeight/2)-scrollY)*((frame-80)/20)+scrollY))}
-    if(frame>=100){for(const enemy of document.getElementById("minigameObjects").children){enemy.remove()};loadMotion();clearInterval(animation)}
+    if(frame>=100){for(const enemy of document.getElementById("minigameObjects").children){enemy.remove()};loadMotion();clearInterval(animation);for(orb of document.getElementsByClassName("enemyOrbs")){orb.remove()};document.getElementById("minigameObjects").children[0].remove()}
+}
+//Animation for enemies spawning//
+function portalanim(){
+    frame++
+    //this part is making you move at a constant rate, the reason it is long is it includes the parallax as well, dont worry about length please//
+    if(frame<=40){window.scroll(((startpoint[0]-scrollX)*(frame/40)+scrollX),((startpoint[1]-scrollY)*(frame/40)+scrollY))}
+    if(frame<=200){document.getElementById("portal").style.transform = "rotate("+((frame)*9)+"deg) "}
+    if(frame <= 55){document.getElementById("portal").style.transform += "scaleX("+Math.max((frame-40)/15,0)+") scaleY("+Math.max((frame-40)/15,0)+") "}
+    if(frame==120){placeEnemies()}
+    if(frame>=135){document.getElementById("portal").style.transform += "scaleX("+Math.max(1-(frame-135)/15,0)+") scaleY("+Math.max(1-(frame-135)/15,0)+") "}
+    if(frame>=160){window.scroll((((cx-window.innerWidth/2)-scrollX)*((frame-160)/40)+scrollX),(((cy-window.innerHeight/2)-scrollY)*((frame-160)/40)+scrollY))}
+    if(frame==200){clearInterval(animation);loadMotion();document.getElementById("ROOT").style.scrollBehavior = "initial";document.getElementById("portal").remove()}
 }
