@@ -13,6 +13,7 @@ baseEnemy.style.position = "Absolute"
 baseEnemy.style.height = "80px"
 baseEnemy.style.width = "120px"
 baseEnemy.attributes.health = 10
+baseEnemy.attributes.shielded = true
 //enemy orb builder//
 let enemyOrb = document.createElement("img")
 enemyOrb.className = "enemyOrbs"
@@ -62,6 +63,7 @@ let frame = 0
 let animation
 let currentOrbs = 0
 moveinterval = window.setInterval(moveEnemy,50)
+var shieldInterval
 function startDefense(){
     if(canStart){
         frame = 0
@@ -89,6 +91,7 @@ function placeEnemies(){
         enemy.style.left = enemy.attributes.pos[0] +"px"
         enemy.style.top =  enemy.attributes.pos[1]+"px"
         currentOrbs = 5
+        enemy.attributes.shielded = false
         for(let i = 0; i<currentOrbs;i++){
             let Orb = enemyOrb.cloneNode()
             document.getElementById("minigameObjects").appendChild(Orb)
@@ -105,8 +108,14 @@ function placeEnemies(){
         enemyShld.style.position = "absolute"
         enemyShld.style.zIndex = 100000
     }
+    shieldInterval = setTimeout(shieldSwap,400)
 }
-
+//updates orb rotation//
+function updateOrbs(){
+    for(var Orb of document.getElementsByClassName("enemyOrbs")){
+        Orb.attributes.rotation = (360/currentOrbs)*i
+    }
+}
 //enemy movement goes here//
 function moveEnemy(){
     if(enemies==0 && canStart==false){canStart=true;playFinish()}
@@ -114,13 +123,13 @@ function moveEnemy(){
     let pPosx = cx, pPosy = cy;
     if(enemies>0){
     for(var element of document.getElementsByClassName("enemyBase")){
-        if(element.getAttribute('health')<=0){enemies--;if(enemies!=0){element.remove()}}
+        if(element.getAttribute('health')<=0){if(currentOrbs==0){enemies--;if(enemies!=0){element.remove()}else{element.attributes.health=10;currentOrbs--;document.getElementsByClassName("enemyOrbs")[0].remove();updateOrbs()}}}
         rotation = Math.round((Math.atan2(pPosy+40-element.style.top.split('px')[0]-1+1,pPosx-20-element.style.left.split('px')[0]-1+1)+Math.PI/2)*(180/Math.PI)/5)*5
         let dist = Math.sqrt(Math.pow(cx-element.attributes.pos[0],2)+Math.pow(cy-element.attributes.pos[1],2))
         //movey = ((dist<120?(dist<100?5*Math.sin(rotation*Math.PI/180)+Math.PI/4:5*Math.sin((rotation*Math.PI/180))):5*Math.sin((rotation*Math.PI/180)-Math.PI/2)))
         //movex = ((dist<120?(dist<100?5*Math.cos(rotation*Math.PI/180)+Math.PI/4:5*Math.cos((rotation*Math.PI/180))):5*Math.cos((rotation*Math.PI/180)-Math.PI/2)))
-        movey = ((dist<120?5*Math.sin((rotation*Math.PI/180)):5*Math.sin((rotation*Math.PI/180)-Math.PI/2)))
-        movex = ((dist<120?5*Math.cos((rotation*Math.PI/180)):5*Math.cos((rotation*Math.PI/180)-Math.PI/2)))
+        movey = ((dist<360?5*Math.sin((rotation*Math.PI/180)):5*Math.sin((rotation*Math.PI/180)-Math.PI/2)))
+        movex = ((dist<360?5*Math.cos((rotation*Math.PI/180)):5*Math.cos((rotation*Math.PI/180)-Math.PI/2)))
 
         //let empty = (dist<300 && element.attributes.framestillshoot==0?shootBullet(rotation,[element.style.top.split('px')[0]-1+11,element.style.left.split('px')[0]-1+21],element):null)
         element.attributes.framestillshoot = (element.attributes.framestillshoot>0?element.attributes.framestillshoot-1:0)
@@ -148,7 +157,7 @@ function moveEnemy(){
         element.style.left = element.attributes.position[1]+20+"px"
         for(const targets of document.getElementsByClassName(element.attributes.target)){
             let collision = collide(element,targets)
-            if(collision!="none"){targets.setAttribute("health",targets.getAttribute("health")-1);element.remove()}
+            if(collision!="none"){if(targets.hasAttribute("shielded")){if(!targets.getAttribute("shielded")){targets.setAttribute("health",targets.getAttribute("health")-1)}}else{targets.setAttribute("health",targets.getAttribute("health")-1)};element.remove()}
         }
     }
 }
@@ -167,6 +176,7 @@ function shootBullet(angle,position,element){
 var goalx=0,goaly=0;
 function playFinish(){
     frame = 0
+    clearTimeout(shieldInterval)
     animation = window.setInterval(finishAnim,50)
     clearInterval(movement)
     goaly = document.getElementById("minigameObjects").children[0].style.top.split("px")[0]-1+1
@@ -180,7 +190,7 @@ function finishAnim(){
     if(frame>50 && frame <80){document.getElementById("minigameObjects").children[0].style.transform += "scaleX("+(1-((frame-50)/30))*100+"%) scaleY("+(1-((frame-50)/30))*100+"%)"}
     if(frame>=80){document.getElementById("minigameObjects").children[0].style.transform +="scaleX(0%) scaleY(0%)"}
     if(frame>=80){window.scroll((((cx-window.innerWidth/2)-scrollX)*((frame-80)/20)+scrollX),(((cy-window.innerHeight/2)-scrollY)*((frame-80)/20)+scrollY))}
-    if(frame>=100){for(const enemy of document.getElementById("minigameObjects").children){enemy.remove()};loadMotion();clearInterval(animation);for(orb of document.getElementsByClassName("enemyOrbs")){orb.remove()};document.getElementById("minigameObjects").children[0].remove()}
+    if(frame>=100){for(const enemy of document.getElementById("minigameObjects").children){enemy.remove()};loadMotion();clearInterval(animation);for(orb of document.getElementsByClassName("enemyOrbs")){orb.remove()};document.getElementById("minigameObjects").children[0].remove();document.getElementById("enemyShield").remove()}
 }
 //Animation for enemies spawning//
 function portalanim(){
@@ -193,4 +203,10 @@ function portalanim(){
     if(frame>=135){document.getElementById("portal").style.transform += "scaleX("+Math.max(1-(frame-135)/15,0)+") scaleY("+Math.max(1-(frame-135)/15,0)+") "}
     if(frame>=160){window.scroll((((cx-window.innerWidth/2)-scrollX)*((frame-160)/40)+scrollX),(((cy-window.innerHeight/2)-scrollY)*((frame-160)/40)+scrollY))}
     if(frame==200){clearInterval(animation);loadMotion();document.getElementById("ROOT").style.scrollBehavior = "initial";document.getElementById("portal").remove()}
+}
+//shield swapping between on and off//
+function shieldSwap(){
+    if(document.getElementById("minigameObjects").children[0].attributes.shielded){shieldInterval = window.setTimeout(shieldSwap,1600*(currentOrbs/5))}else{shieldInterval = window.setTimeout(shieldSwap,2000-(1600*(currentOrbs/5)))}
+    document.getElementById("minigameObjects").children[0].attributes.shielded = !document.getElementById("minigameObjects").children[0].attributes.shielded
+    document.getElementById("enemyShield").style.opacity = !document.getElementById("minigameObjects").children[0].attributes.shielded*0.5
 }
