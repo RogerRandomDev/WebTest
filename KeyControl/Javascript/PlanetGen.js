@@ -54,6 +54,9 @@ function createPlanet(objectID){
     textbelow.style.width = planetbase.width*5+"px"
     textbelow.style.left = "-"+planetbase.width*2+"px"
     partholder.appendChild(planetpart0)
+    planetbase.style.userSelect = "none"
+    partholder.style.userSelect = "none"
+    planetpart0.style.userSelect = "none"
     planet.appendChild(planetbase)
     planet.appendChild(partholder)
     planet.appendChild(textbelow)

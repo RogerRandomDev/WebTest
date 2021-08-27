@@ -11,6 +11,8 @@ let ismoving = false
 let isShooting = false
 let ammoLeft = 25
 const maxAmmo = 25
+var ammoregen
+var ammoregendelay
 //position variables//
 var px=0,py=0;
 var cx=1024,cy=1024;
@@ -33,26 +35,32 @@ document.addEventListener('readystatechange', event => {
     if (event.target.readyState === "complete") {
         collObj = document.getElementById("collisionObjects").children
         movement = window.setInterval(move,40)
+        document.getElementById("ammo").style.top=window.innerHeight/2-32+"px"
+        document.getElementById("ammo").style.left = -window.innerWidth/2-128+"px"
     }
 });
 //Checks mouse position//
 function mousePos(pos){
-    mousebaseX=pos.screenX
-    mousebaseY=pos.screenY-128
+    mousebaseX=pos.clientX
+    mousebaseY=pos.clientY-64
 }
 //mouse functions//
 function mousePressed(id){
     if(id.which == 1){
         isShooting = true
+        window.clearInterval(ammoregen)
+        if(ammoregendelay !=-100){window.clearInterval(ammoregendelay);ammoregendelay=-100}
     }
 }
 function mouseReleased(id){
     if(id.which == 1){
         isShooting = false
+        ammoregendelay = window.setTimeout(function() {if(!isShooting){ammoregen = window.setInterval(regenAmmo,25)}},1000)
     }
 }
 //Ammo regeneration//
-window.setInterval(function() {if(!isShooting && ammoLeft < maxAmmo){ammoLeft++}},100)
+function regenAmmo(){if(!isShooting && ammoLeft < maxAmmo){ammoLeft++;document.getElementById("ammo").textContent="AMMO:\n"+ammoLeft+"/"+maxAmmo}}
+ammoregen = window.setInterval(regenAmmo,25)
 
 //Changes if key is active or not//
 function keyPressed(keyid) {
@@ -68,9 +76,11 @@ function keyPressed(keyid) {
         }
     }
 }
+//loads player base function//
 function loadMotion(){
     movement = window.setInterval(move,40)
 }
+//updates collision objects when called, needed as planets are set up by script, so this is called after they are made//
 function setCollision(){
     collObj = document.getElementById("collisionObjects").children
 }
@@ -94,7 +104,7 @@ function move(){
     faceAngle = (Math.atan2(cx-mouseposX,mouseposY-cy)*180/Math.PI)-180
     if(framesTillShoot>0){framesTillShoot--}
     //fires shot if it can//
-    if(isShooting && framesTillShoot==0 && ammoLeft>0){shootBullets(faceAngle,[cy+40,cx-7.5],null)}
+    if(isShooting && framesTillShoot==0 && ammoLeft>0){shootBullets(faceAngle,[cy+40,cx-7.5],null);document.getElementById("ammo").textContent="AMMO:\n"+ammoLeft+"/"+maxAmmo}
     
     //sets motion amount you can do
     py = Math.min((keyspressed[0] - keyspressed[1]),0.875)*(1-(Math.abs((keyspressed[3] - keyspressed[2]))/3))*10
@@ -125,7 +135,8 @@ function move(){
     //scrolls to keep centered except at edges of game area//
     window.scroll(Math.min(cx-window.innerWidth/2,3072-window.innerWidth),Math.min(cy-window.innerHeight/2,2056-window.innerHeight))
     mouseposX=mousebaseX+scrollX;mouseposY=mousebaseY+scrollY
-
+    document.getElementById("ammo").style.top=scrollY+window.innerHeight-64+"px"
+    document.getElementById("ammo").style.left=scrollX-64+"px"
     //sets background parallax effect for 2 layers, used three before, was a bit unecessary as it looked fine otherwise//
     document.getElementById("Parallax").children[0].style.top = -scrollY*0.0625-32+"px"
     document.getElementById("Parallax").children[0].style.left = -scrollX*0.0625-32+"px"
@@ -133,6 +144,7 @@ function move(){
     document.getElementById("Parallax").children[1].style.top = -scrollY*0.03125-432+"px"
 }
 
+//Fires bullets//
 function shootBullets(angle,position,element){
     ammoLeft--
     framesTillShoot = 2

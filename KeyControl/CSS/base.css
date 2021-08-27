@@ -56,4 +56,7 @@
     image-rendering: pixelated;
     src:url(./Images/MiniGames/PlanetDefense/Portal);
 }
+.generatePlanet{
+    user-select: none;
+};
 .player{user-select: none;}
