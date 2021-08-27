@@ -16,13 +16,13 @@ baseEnemy.attributes.health = 10
 let bullet = document.createElement("img")
 bullet.className="bullet"
 bullet.src="./Images/MiniGames/PlanetDefense/ShipBullet.png"
-bullet.width = "8px"
-bullet.height = "8px"
+bullet.width = "16px"
+bullet.height = "16px"
 bullet.attributes.target="player"
 bullet.style.imageRendering="pixelated"
 bullet.style.position="absolute"
-bullet.style.height="8px"
-bullet.style.width="8px"
+bullet.style.height="16px"
+bullet.style.width="16px"
 bullet.attributes.angle=5
 //Portal assembler//
 let portal = document.createElement("img")
@@ -39,6 +39,7 @@ let canStart = true
 let startpoint = [0,0]
 let frame = 0
 let animation
+moveinterval = window.setInterval(moveEnemy,50)
 function startDefense(){
     if(canStart){
         frame = 0
@@ -54,7 +55,6 @@ function startDefense(){
         portalObj.style.top = startpoint[1]+window.innerHeight/2+"px"
         portalObj.style.transform = "rotate(0deg) scaleX(0) scaleY(0)"
         animation = setInterval(portalanim,20)
-        moveinterval = window.setInterval(moveEnemy,50)
         canStart = false
     }
 }
@@ -108,8 +108,8 @@ function moveEnemy(){
     for(const element of document.getElementsByClassName("bullet")){
         element.attributes.framesleft--
         if(element.attributes.framesleft==0){element.remove()}
-        element.attributes.position[0] -= 16*Math.sin((element.attributes.angle+90)*Math.PI/180)
-        element.attributes.position[1] -= 16*Math.cos((element.attributes.angle+90)*Math.PI/180)
+        element.attributes.position[0] -= 24*Math.sin((element.attributes.angle+90)*Math.PI/180)
+        element.attributes.position[1] -= 24*Math.cos((element.attributes.angle+90)*Math.PI/180)
         element.style.top = element.attributes.position[0]+20+"px"
         element.style.left = element.attributes.position[1]+20+"px"
         for(const targets of document.getElementsByClassName(element.attributes.target)){
@@ -119,10 +119,10 @@ function moveEnemy(){
     }
 }
 function shootBullet(angle,position,element){
-    element.attributes.framestillshoot = 5
+    element.attributes.framestillshoot = 50
     let newbullet = bullet.cloneNode()
     newbullet.attributes.position = position
-    newbullet.attributes.framesleft = 40
+    newbullet.attributes.framesleft = 80
     newbullet.attributes.target = "player"
     document.getElementById("Misc").appendChild(newbullet)
     newbullet.attributes.angle = angle
@@ -141,7 +141,10 @@ function playFinish(){
 function finishAnim(){
     frame++
     document.getElementById("minigameObjects").children[0].style.transform = ""
-    if(frame<=20){window.scroll((goalx-scrollX-window.innerWidth)*(frame/20)+scrollX,(goaly-scrollY-window.innerHeight)*(frame/20)+scrollY)}
-    if(frame>40 && frame <100){document.getElementById("minigameObjects").children[0].style.transform += "rotate("+((frame-40)/10)*360+"deg)"}
+    if(frame<=20){window.scroll((goalx-scrollX-(window.innerWidth/2))*(frame/20)+scrollX-Math.sin(frame/2*Math.PI)*2,(goaly-scrollY-(window.innerHeight/2))*(frame/20)+scrollY-Math.sin(frame/2*Math.PI)*2)}
+    if(frame>40 && frame <80){document.getElementById("minigameObjects").children[0].style.transform += "rotate("+((frame-40)/5)*360+"deg)"; window.scrollBy(Math.sin((frame-40)/2*Math.PI)*4,Math.sin((frame-40)/2*Math.PI)*4)}
+    if(frame>50 && frame <80){document.getElementById("minigameObjects").children[0].style.transform += "scaleX("+(1-((frame-50)/30))*100+"%) scaleY("+(1-((frame-50)/30))*100+"%)"}
+    if(frame>=80){document.getElementById("minigameObjects").children[0].style.transform +="scaleX(0%) scaleY(0%)"}
+    if(frame>=80){window.scroll((((cx-window.innerWidth/2)-scrollX)*((frame-80)/20)+scrollX),(((cy-window.innerHeight/2)-scrollY)*((frame-80)/20)+scrollY))}
     if(frame>=100){for(const enemy of document.getElementById("minigameObjects").children){enemy.remove()};loadMotion();clearInterval(animation)}
 }
