@@ -169,7 +169,7 @@ function moveEnemy(){
         element.attributes.framesleft--
         if(element.attributes.framesleft==0 && element.hasAttribute("forever") == false){element.remove()}
         let dirmult = 1
-        if(element.getAttribute("forever")=="true"){dirmult = 1-((20-element.attributes.framesLeft)/20)}
+        if(element.getAttribute("forever")=="true"){dirmult = Math.max(1-((20-element.attributes.framesLeft)/20),0)}
         element.attributes.position[0] -= dirmult*(24*Math.sin((element.attributes.angle+90)*Math.PI/180))
         element.attributes.position[1] -= dirmult*(24*Math.cos((element.attributes.angle+90)*Math.PI/180))
         element.style.top = element.attributes.position[0]+20+"px"
