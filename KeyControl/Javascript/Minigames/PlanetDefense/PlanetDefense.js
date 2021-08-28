@@ -13,7 +13,7 @@ baseEnemy.style.position = "Absolute"
 baseEnemy.style.height = "80px"
 baseEnemy.style.width = "120px"
 baseEnemy.attributes.health = 10
-baseEnemy.attributes.shielded = true
+baseEnemy.attributes.shielded = false
 //enemy orb builder//
 let enemyOrb = document.createElement("img")
 enemyOrb.className = "enemyOrbs"
@@ -27,14 +27,14 @@ enemyOrb.style.position="absolute"
 //bullet assembler//
 let bullet = document.createElement("img")
 bullet.className="bullet"
-bullet.src="./Images/MiniGames/PlanetDefense/ShipBullet.png"
-bullet.width = "16px"
-bullet.height = "16px"
+bullet.src="./Images/MiniGames/PlanetDefense/ShieldBreaker.png"
+bullet.width = "24px"
+bullet.height = "24px"
 bullet.attributes.target="player"
 bullet.style.imageRendering="pixelated"
 bullet.style.position="absolute"
-bullet.style.height="16px"
-bullet.style.width="16px"
+bullet.style.height="24px"
+bullet.style.width="24px"
 bullet.attributes.angle=5
 //Portal assembler//
 let portal = document.createElement("img")
@@ -79,6 +79,7 @@ function startDefense(){
         portalObj.style.top = startpoint[1]+window.innerHeight/2+"px"
         portalObj.style.transform = "rotate(0deg) scaleX(0) scaleY(0)"
         animation = setInterval(portalanim,20)
+        window.clearInterval(moveinterval)
         canStart = false
     }
 }
@@ -91,29 +92,37 @@ function placeEnemies(){
         enemy.style.left = enemy.attributes.pos[0] +"px"
         enemy.style.top =  enemy.attributes.pos[1]+"px"
         currentOrbs = 5
-        enemy.attributes.shielded = false
+        enemy.setAttribute("shielded",false)
         for(let i = 0; i<currentOrbs;i++){
             let Orb = enemyOrb.cloneNode()
             document.getElementById("minigameObjects").appendChild(Orb)
-            Orb.style.top = (enemy.attributes.pos[1]-(Math.sin(Math.PI*2/3)*64))+"px"
-            Orb.style.left = (enemy.attributes.pos[0]-(Math.cos(Math.PI*2/3)*64))+"px"
-            Orb.attributes.orbID = i+1
             Orb.attributes.rotation = (360/currentOrbs)*i
+            Orb.style.transform = "scaleX(0%) scaleY(0%)"
+            Orb.style.top = 40+enemy.attributes.pos[1]+Math.sin((Orb.attributes.rotation)*Math.PI/180)*120+"px"
+            Orb.style.left = 55+enemy.attributes.pos[0]+Math.cos((Orb.attributes.rotation)*Math.PI/180)*120+"px"
+            Orb.attributes.orbID = i+1
         }
         let enemyShld = shield.cloneNode()
         enemyShld.attributes.timeTillDisabled = 20
         document.getElementById("minigameObjects").appendChild(enemyShld)
-        enemyShld.style.top=enemy.attributes.pos[1]+40+"px"
-        enemyShld.style.left=enemy.attributes.pos[0]+60+"px"
+        enemyShld.style.opacity = '0.0'
+        document.getElementById("enemyShield").style.top=enemy.attributes.pos[1]-70+"px"
+        document.getElementById("enemyShield").style.left=enemy.attributes.pos[0]-50+"px"
         enemyShld.style.position = "absolute"
         enemyShld.style.zIndex = 100000
     }
-    shieldInterval = setTimeout(shieldSwap,400)
 }
 //updates orb rotation//
 function updateOrbs(){
+    let i = 0
     for(var Orb of document.getElementsByClassName("enemyOrbs")){
+        i+=1
         Orb.attributes.rotation = (360/currentOrbs)*i
+    }
+    if(currentOrbs==0){
+        window.clearTimeout(shieldInterval);
+        document.getElementById("enemyShield").style.opacity = 0.0;
+        document.getElementById("minigameObjects").children[0].setAttribute('shielded',false)
     }
 }
 //enemy movement goes here//
@@ -123,16 +132,24 @@ function moveEnemy(){
     let pPosx = cx, pPosy = cy;
     if(enemies>0){
     for(var element of document.getElementsByClassName("enemyBase")){
-        if(element.getAttribute('health')<=0){if(currentOrbs==0){enemies--;if(enemies!=0){element.remove()}else{element.attributes.health=10;currentOrbs--;document.getElementsByClassName("enemyOrbs")[0].remove();updateOrbs()}}}
+        if(element.getAttribute('health')<=0){if(currentOrbs==0){
+            enemies--;
+            if(enemies!=0){element.remove()}
+        }else{
+            element.setAttribute('health',10);
+            currentOrbs--;
+            document.getElementsByClassName("enemyOrbs")[0].remove();
+            updateOrbs()
+        }}
         rotation = Math.round((Math.atan2(pPosy+40-element.style.top.split('px')[0]-1+1,pPosx-20-element.style.left.split('px')[0]-1+1)+Math.PI/2)*(180/Math.PI)/5)*5
         let dist = Math.sqrt(Math.pow(cx-element.attributes.pos[0],2)+Math.pow(cy-element.attributes.pos[1],2))
         //movey = ((dist<120?(dist<100?5*Math.sin(rotation*Math.PI/180)+Math.PI/4:5*Math.sin((rotation*Math.PI/180))):5*Math.sin((rotation*Math.PI/180)-Math.PI/2)))
         //movex = ((dist<120?(dist<100?5*Math.cos(rotation*Math.PI/180)+Math.PI/4:5*Math.cos((rotation*Math.PI/180))):5*Math.cos((rotation*Math.PI/180)-Math.PI/2)))
         movey = ((dist<360?5*Math.sin((rotation*Math.PI/180)):5*Math.sin((rotation*Math.PI/180)-Math.PI/2)))
         movex = ((dist<360?5*Math.cos((rotation*Math.PI/180)):5*Math.cos((rotation*Math.PI/180)-Math.PI/2)))
-
+        let empty = (dist<512 && document.getElementById("shieldDiffuser")==null && element.framestillshoot <= 0?shootBullet(rotation,[element.style.top.split('px')[0]-1+11,element.style.left.split('px')[0]-1+21],element):null)
         //let empty = (dist<300 && element.attributes.framestillshoot==0?shootBullet(rotation,[element.style.top.split('px')[0]-1+11,element.style.left.split('px')[0]-1+21],element):null)
-        element.attributes.framestillshoot = (element.attributes.framestillshoot>0?element.attributes.framestillshoot-1:0)
+        element.attributes.framestillshoot = (element.attributes.framestillshoot>0?(document.getElementById("shieldDiffuser")==null?element.attributes.framestillshoot-1:element.attributes.framestillshoot):0)
         element.attributes.pos[0] += movex
         element.attributes.pos[1] += movey
         element.style.top = element.attributes.pos[1]+"px"
@@ -150,14 +167,16 @@ function moveEnemy(){
     }
     for(const element of document.getElementsByClassName("bullet")){
         element.attributes.framesleft--
-        if(element.attributes.framesleft==0){element.remove()}
-        element.attributes.position[0] -= 24*Math.sin((element.attributes.angle+90)*Math.PI/180)
-        element.attributes.position[1] -= 24*Math.cos((element.attributes.angle+90)*Math.PI/180)
+        if(element.attributes.framesleft==0 && element.hasAttribute("forever") == false){element.remove()}
+        let dirmult = 1
+        if(element.getAttribute("forever")=="true"){dirmult = 1-((element.attributes.framesLeft-20)/20)}
+        element.attributes.position[0] -= dirmult*(24*Math.sin((element.attributes.angle+90)*Math.PI/180))
+        element.attributes.position[1] -= dirmult*(24*Math.cos((element.attributes.angle+90)*Math.PI/180))
         element.style.top = element.attributes.position[0]+20+"px"
         element.style.left = element.attributes.position[1]+20+"px"
         for(const targets of document.getElementsByClassName(element.attributes.target)){
             let collision = collide(element,targets)
-            if(collision!="none"){if(targets.hasAttribute("shielded")){if(!targets.getAttribute("shielded")){targets.setAttribute("health",targets.getAttribute("health")-1)}}else{targets.setAttribute("health",targets.getAttribute("health")-1)};element.remove()}
+            if(collision!="none"){if(targets.hasAttribute("shielded")){if(targets.getAttribute("shielded") == 'false'){targets.setAttribute("health",targets.getAttribute("health")-1)}}else{targets.setAttribute("health",targets.getAttribute("health")-1)};element.remove()}
         }
     }
 }
@@ -169,6 +188,8 @@ function shootBullet(angle,position,element){
     newbullet.attributes.target = "player"
     document.getElementById("Misc").appendChild(newbullet)
     newbullet.attributes.angle = angle
+    newbullet.setAttribute("forever","true")
+    newbullet.id = "shieldDiffuser"
     newbullet.style.top = position[0]+"px"
     newbullet.style.left = position[1]+"px"
 }
@@ -201,12 +222,17 @@ function portalanim(){
     if(frame <= 55){document.getElementById("portal").style.transform += "scaleX("+Math.max((frame-40)/15,0)+") scaleY("+Math.max((frame-40)/15,0)+") "}
     if(frame==120){placeEnemies()}
     if(frame>=135){document.getElementById("portal").style.transform += "scaleX("+Math.max(1-(frame-135)/15,0)+") scaleY("+Math.max(1-(frame-135)/15,0)+") "}
-    if(frame>=160){window.scroll((((cx-window.innerWidth/2)-scrollX)*((frame-160)/40)+scrollX),(((cy-window.innerHeight/2)-scrollY)*((frame-160)/40)+scrollY))}
-    if(frame==200){clearInterval(animation);loadMotion();document.getElementById("ROOT").style.scrollBehavior = "initial";document.getElementById("portal").remove()}
+    if(frame>=140 && frame<180){document.getElementsByClassName("enemyOrbs")[0].style.transform = "scaleX("+(frame-140)/40+") scaleY("+(frame-140)/40+")"}
+    if(frame>=145 && frame<185){document.getElementsByClassName("enemyOrbs")[1].style.transform = "scaleX("+(frame-145)/40+") scaleY("+(frame-145)/40+")"}
+    if(frame>=150 && frame<190){document.getElementsByClassName("enemyOrbs")[2].style.transform = "scaleX("+(frame-150)/40+") scaleY("+(frame-150)/40+")"}
+    if(frame>=155 && frame<195){document.getElementsByClassName("enemyOrbs")[3].style.transform = "scaleX("+(frame-155)/40+") scaleY("+(frame-155)/40+")"}
+    if(frame>=160 && frame<200){document.getElementsByClassName("enemyOrbs")[4].style.transform = "scaleX("+(frame-160)/40+") scaleY("+(frame-160)/40+")"}
+    if(frame>=240){window.scroll((((cx-window.innerWidth/2)-scrollX)*((frame-240)/40)+scrollX),(((cy-window.innerHeight/2)-scrollY)*((frame-240)/40)+scrollY))}
+    if(frame==280){clearInterval(animation);;loadMotion();moveinterval=window.setInterval(moveEnemy,50);document.getElementById("ROOT").style.scrollBehavior = "initial";document.getElementById("portal").remove();shieldInterval = window.setTimeout(shieldSwap,3000-(2000*(currentOrbs/5)))}
 }
 //shield swapping between on and off//
 function shieldSwap(){
-    if(document.getElementById("minigameObjects").children[0].attributes.shielded){shieldInterval = window.setTimeout(shieldSwap,1600*(currentOrbs/5))}else{shieldInterval = window.setTimeout(shieldSwap,2000-(1600*(currentOrbs/5)))}
-    document.getElementById("minigameObjects").children[0].attributes.shielded = !document.getElementById("minigameObjects").children[0].attributes.shielded
-    document.getElementById("enemyShield").style.opacity = !document.getElementById("minigameObjects").children[0].attributes.shielded*0.5
+    if(document.getElementById("minigameObjects").children[0].getAttribute('shielded')=='false'){shieldInterval = window.setTimeout(shieldSwap,4000*(currentOrbs/5))}
+    document.getElementById("minigameObjects").children[0].setAttribute('shielded',(document.getElementById("minigameObjects").children[0].getAttribute('shielded')=='false'))
+    document.getElementById("enemyShield").style.opacity = (document.getElementById("minigameObjects").children[0].getAttribute('shielded')=='true')*0.5
 }

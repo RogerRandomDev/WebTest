@@ -13,6 +13,7 @@ let ammoLeft = 25
 const maxAmmo = 25
 var ammoregen
 var ammoregendelay
+
 //position variables//
 var px=0,py=0;
 var cx=1024,cy=1024;
