@@ -88,10 +88,12 @@ function placeEnemies(){
         let enemy = baseEnemy.cloneNode()
         enemy.setAttribute("health",10)
         document.getElementById("minigameObjects").appendChild(enemy)
+        enemy.attributes.framestillshoot = 0
         enemy.attributes.pos = [startpoint[0]+window.innerWidth/2,startpoint[1]+window.innerHeight/2]
         enemy.style.left = enemy.attributes.pos[0] +"px"
         enemy.style.top =  enemy.attributes.pos[1]+"px"
         currentOrbs = 5
+        enemy.id = "ShieldedBoss"
         enemy.setAttribute("shielded",false)
         for(let i = 0; i<currentOrbs;i++){
             let Orb = enemyOrb.cloneNode()
@@ -140,6 +142,9 @@ function moveEnemy(){
             currentOrbs--;
             document.getElementsByClassName("enemyOrbs")[0].remove();
             updateOrbs()
+            //window.clearTimeout(shieldInterval)
+            element.setAttribute("shielded","false")
+            shieldSwap()
         }}
         rotation = Math.round((Math.atan2(pPosy+40-element.style.top.split('px')[0]-1+1,pPosx-20-element.style.left.split('px')[0]-1+1)+Math.PI/2)*(180/Math.PI)/5)*5
         let dist = Math.sqrt(Math.pow(cx-element.attributes.pos[0],2)+Math.pow(cy-element.attributes.pos[1],2))
@@ -147,9 +152,9 @@ function moveEnemy(){
         //movex = ((dist<120?(dist<100?5*Math.cos(rotation*Math.PI/180)+Math.PI/4:5*Math.cos((rotation*Math.PI/180))):5*Math.cos((rotation*Math.PI/180)-Math.PI/2)))
         movey = ((dist<360?5*Math.sin((rotation*Math.PI/180)):5*Math.sin((rotation*Math.PI/180)-Math.PI/2)))
         movex = ((dist<360?5*Math.cos((rotation*Math.PI/180)):5*Math.cos((rotation*Math.PI/180)-Math.PI/2)))
-        let empty = (dist<512 && document.getElementById("shieldDiffuser")==null && element.framestillshoot <= 0?shootBullet(rotation,[element.style.top.split('px')[0]-1+11,element.style.left.split('px')[0]-1+21],element):null)
+        let empty = (dist<512 && document.getElementById("shieldDiffuser")==null && element.getAttribute('framestillshoot') <= 0 && element.getAttribute("shielded")=="true" ?shootBullet(rotation,[element.style.top.split('px')[0]-1+11,element.style.left.split('px')[0]-1+21],element):null)
         //let empty = (dist<300 && element.attributes.framestillshoot==0?shootBullet(rotation,[element.style.top.split('px')[0]-1+11,element.style.left.split('px')[0]-1+21],element):null)
-        element.attributes.framestillshoot = (element.attributes.framestillshoot>0?(document.getElementById("shieldDiffuser")==null?element.attributes.framestillshoot-1:element.attributes.framestillshoot):0)
+        if(document.getElementById("shieldDiffuser")==null){element.setAttribute('framestillshoot',element.getAttribute('framestillshoot')-1)}
         element.attributes.pos[0] += movex
         element.attributes.pos[1] += movey
         element.style.top = element.attributes.pos[1]+"px"
@@ -166,10 +171,10 @@ function moveEnemy(){
     }
     }
     for(const element of document.getElementsByClassName("bullet")){
-        element.attributes.framesleft--
-        if(element.attributes.framesleft==0 && element.hasAttribute("forever") == false){element.remove()}
+        element.setAttribute("framesleft",element.getAttribute("framesleft")-1)
+        if(element.getAttribute("framesleft")<=-40 && element.hasAttribute("forever") == false){element.remove()}
         let dirmult = 1
-        if(element.getAttribute("forever")=="true"){dirmult = Math.max(1-((20-element.attributes.framesLeft)/20),0)}
+        if(element.hasAttribute("forever")){dirmult = Math.max(1-(Math.abs(element.getAttribute('framesLeft'))-15)/25,0)}
         element.attributes.position[0] -= dirmult*(24*Math.sin((element.attributes.angle+90)*Math.PI/180))
         element.attributes.position[1] -= dirmult*(24*Math.cos((element.attributes.angle+90)*Math.PI/180))
         element.style.top = element.attributes.position[0]+20+"px"
@@ -179,12 +184,20 @@ function moveEnemy(){
             if(collision!="none"){if(targets.hasAttribute("shielded")){if(targets.getAttribute("shielded") == 'false'){targets.setAttribute("health",targets.getAttribute("health")-1)}}else{targets.setAttribute("health",targets.getAttribute("health")-1)};element.remove()}
         }
     }
+    let Diffuser = document.getElementById("shieldDiffuser")
+    if(Diffuser!=null && Diffuser.getAttribute('framesleft') <= -20){
+        if(Diffuser.attributes.position[1]>3096||Diffuser.attributes.position[1]<64 || Diffuser.attributes.position[0]>1960||Diffuser.attributes.position[0]<88){
+                console.log(Diffuser.attributes.position)
+                Diffuser.remove();
+        };
+        let collision = collide(Diffuser,document.getElementById("ShieldedBoss"));
+        if(collision!=='none'){shieldSwap();Diffuser.remove()}}
 }
 function shootBullet(angle,position,element){
-    element.attributes.framestillshoot = 50
+    element.setAttribute("framestillshoot",100)
     let newbullet = bullet.cloneNode()
     newbullet.attributes.position = position
-    newbullet.attributes.framesleft = 80
+    newbullet.attributes.framesleft = 0
     newbullet.attributes.target = "player"
     document.getElementById("Misc").appendChild(newbullet)
     newbullet.attributes.angle = angle
@@ -197,7 +210,7 @@ function shootBullet(angle,position,element){
 var goalx=0,goaly=0;
 function playFinish(){
     frame = 0
-    clearTimeout(shieldInterval)
+    //clearTimeout(shieldInterval)
     animation = window.setInterval(finishAnim,50)
     clearInterval(movement)
     goaly = document.getElementById("minigameObjects").children[0].style.top.split("px")[0]-1+1
@@ -232,7 +245,9 @@ function portalanim(){
 }
 //shield swapping between on and off//
 function shieldSwap(){
-    if(document.getElementById("minigameObjects").children[0].getAttribute('shielded')=='false'){shieldInterval = window.setTimeout(shieldSwap,4000*(currentOrbs/5))}
+    //if(document.getElementById("minigameObjects").children[0].getAttribute('shielded')=='true'){shieldInterval = window.setTimeout(shieldSwap,2000*(2.5/currentOrbs))}
+    if(currentOrbs!=0){
     document.getElementById("minigameObjects").children[0].setAttribute('shielded',(document.getElementById("minigameObjects").children[0].getAttribute('shielded')=='false'))
     document.getElementById("enemyShield").style.opacity = (document.getElementById("minigameObjects").children[0].getAttribute('shielded')=='true')*0.5
+    }
 }
