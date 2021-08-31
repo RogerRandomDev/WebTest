@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="Author" content="Roger T. Grange">
+
+    <meta name="description" content="Form">
+
+    <meta property="og:image" content="">
+    <meta property="og:title" content="">
+    <meta property="og:description" content="">
+    <style>
+        .textArea {
+            resize: none;
+        }
+    </style>
+    <title>Doc</title>
+</head>
+<body>
+    <form>
+        <fieldset style="width: 512px;">
+            <legend style="font-size: 24px;">PAYMENT FORM</legend>
+            Required Areas Are Followed By A *<br>
+            <h2>Contact Information</h2><br>
+            <fieldset style="left:256px; position: relative; width: 128px;">
+                <legend style="font-size:16px">Title</legend>
+                <input type="radio" name="title" id="Boy">
+                <label for="boy">Boy</label>
+                <br>
+                <input type="radio" name="title" id="Girl">
+                <label for="girl">Girl</label>
+                <br>
+                <input type="radio" name="title" id="DOOM">
+                <label for="DOOM">DOOM</label>
+                <br>
+            </fieldset><br>
+            <label for="name">Name:*</label>
+            <input type="text" maxlength="48" width="128px" id="name" required><br>
+            <label for="email">E-Mail:*</label>
+            <input type="text" maxlength="48" width="128px" id="email" required><br>
+            <label for="password">Password:*</label>
+            <input type="password" maxlength="48" width="128px" id="password" required><br>
+            <h2>Payment information</h2><br>
+            <label for="card">CardType:*</label>
+            <input list="cardtype" id="card"name="mycard" required>
+            <datalist id="cardtype">
+                <option value="Visa"></option>
+                <option value="Debit"></option>
+                <option value="Credit"></option>
+                <option value="PayPal"></option>
+            </datalist><br>
+            <label for="cpass">Card Number:*</label>
+            <input type="text" maxlength="10" minlength="10" width="128px" id="cpass" required><br>
+            <label for="expirDate">Expiration Date:*</label>
+            <input type="date" width="128px" id="expirDate" required><br>
+            <button type="submit">Submit Form</button>
+            <br>
+        </fieldset>
+    </form>
+
+
+
+</body>
+</html>

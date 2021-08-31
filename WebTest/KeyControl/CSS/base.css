@@ -1,0 +1,72 @@
+.space {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  background-color: rgb(5, 5, 5);
+  width: 3072px;
+  height: 2152px;
+  max-height: 2152px;
+  max-width: 3072px;
+  scroll-margin: 0 0;
+  user-select: none;
+}
+.text {
+  z-index: 10000;
+  width: 320px;
+  user-select: none;
+  color: rgba(75, 75, 75, 1);
+  text-align: center;
+  font-family: fantasy;
+  font-size: 24px;
+  min-height: 48px;
+  max-height: 48px;
+}
+.spacetext {
+  z-index: 999;
+  user-select: none;
+  color: rgba(75, 75, 75, 1);
+  text-align: center;
+  font-family: fantasy;
+  font-size: 24px;
+}
+.backgroundParallax {
+  z-index: -1;
+  background-repeat: repeat;
+  user-select: none;
+  position: absolute;
+}
+.enemyBase {
+  z-index: 5;
+  user-select: none;
+  position: absolute;
+  src: url(./Images/MiniGames/PlanetDefense/EnemyShip.png);
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+.bullet {
+  z-index: 4;
+  position: absolute;
+  user-select: none;
+  src: url(./Images/MiniGames/PlanetDefense/ShipBullet.png);
+}
+.imageBase {
+  z-index: 4;
+  position: absolute;
+  user-select: none;
+  image-rendering: pixelated;
+  src: url(./Images/MiniGames/PlanetDefense/Portal.png);
+}
+.generatePlanet {
+  user-select: none;
+}
+.enemyOrbs {
+  z-index: 4;
+  position: absolute;
+  user-select: none;
+  image-rendering: pixelated;
+  src: url(./Images/MiniGames/PlanetDefense/EnemyOrb.png);
+  transform-origin: 50% 50%;
+}
+.player {
+  user-select: none;
+}

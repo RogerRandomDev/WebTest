@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="Author" content="Roger T. Grange">
+
+    <meta name="description" content="A space game made for fun, with enemies, minigames, and little neat things made for fun">
+
+    <meta property="og:image" content="">
+    <meta property="og:title" content="">
+    <meta property="og:description" content="">
+    
+    <title>SpaceShip</title>
+
+    <link rel="stylesheet" href="./CSS/base.css">
+    <link rel="icon" href="Images/Planet0.png" sizes="any">
+    
+    
+    <script src="./Javascript/Collision.js" type="text/javascript"></script>
+    <script src="./Javascript/Minigames/PlanetDefense/PlanetDefense.js" type="text/javascript"></script>
+    <script src="Javascript/Minigames/MinigameChooser.js" type="text/javascript"></script>
+    <script src="./Javascript/movement.js" type="text/javascript"></script>
+    <script src="./Javascript/PlanetGen.js" type="text/javascript"></script>
+</head>
+<body class="space" onload="grabplanets()" id="ROOT">
+    <div style="z-index: -1; position: relative;" id="Parallax">
+        <img id="stars0" style="background-image:url(./Images/ParallaxBackground/stars1.png);" height="3048px" width="4072px" class="backgroundParallax"></img>
+        <img id="stars1" style="z-index:-1; background-image:url(./Images/ParallaxBackground/stars1.png);" height="3048px" width="4072px" class="backgroundParallax"></img>
+    </div>
+    <div id="positioner" style="position: absolute;user-select: none; pointer-events: none;">
+        <div id="TextArea" class="text" style=" top: -8px; left: -160px; color: rgba(0,0,0,0); position:relative">a</div>
+        <img class="player" src="./Images/Rocket.png" width="30px" height="40px" id="MousePoint" style="margin:0 auto; image-rendering: pixelated; background-color: transparent; position:absolute; z-index:1000;" health=1000 framestillshoot=0></img>
+    </div>
+    <div id="collisionObjects" style="user-select: none; pointer-events: none;">
+        <div class="generateplanet" id="planet0" title="gas,Alpha-02,INFO" style="position:absolute; top:128px; left: 320px"></div>
+        <div class="generateplanet" id="planet1" title="land,O20-C05,HOME" style="position:absolute; top:328px; left: 485px"></div>
+        <div class="generateplanet" id="planet2" title="rock,C05-FE25,Supply" style="position:absolute; top:742px; left: 753px"></div>
+        <div class="generateplanet" id="planet3" title="rock,Cu14-Ag23,Supply" style="position:absolute; top:946px; left: 620px"></div>
+        <div class="generateplanet" id="planet4" title="land,Delta-FC065,Defense" style="position:absolute; top:1760px; left: 620px"></div>
+        <div class="generateplanet" id="planet5" title="rock,Au20-Ag45,Supply" style="position:absolute; top:1324px; left: 820px"></div>
+        <div class="generateplanet" id="planet6" title="rock,Au20-Ag45,Supply" style="position:absolute; top:946px; left: 1200px"></div>
+        <div class="generateplanet" id="planet7" title="rock,Au20-Ag45,Supply" style="position:absolute; top:366px; left: 2620px"></div>
+    </div>
+    <!--Designated for holding objects during minigames, such as enemies and whatnot-->
+    <div id="minigameObjects" style="user-select: none; pointer-events: none;"></div>
+    <div id="Misc" style="user-select: none; pointer-events: none;"></div>
+    <!--Base area for info and other neat things i will add-->
+    <div id="Bottom" style="position: absolute; background-color:  rgb(12.5,37.5,12.5);border-color:rgb(50,50,50); border-style: solid; border-width: 8px; width: 100%; height: 100%; z-index: 1000;">
+        <!--outline with :text-shadow: 2px 2px 0 #fff, -2px 2px 0 #fff, 2px -2px 0 #fff, -2px -2px 0 #fff-->
+        <footer class="text" style="position: absolute; white-space: pre-line; color:rgb(37.5,112.5,37.5); user-select: none; pointer-events: none; top:6px; left:-88px" id="ammo">AMMO:<br>25/25</footer>
+    </div>
+</body>
+</html>
