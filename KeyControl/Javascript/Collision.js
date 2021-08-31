@@ -7,10 +7,12 @@ const collisionTypeInfo = {
 }
 function collide(r1,r2,texttoshow){
     //Does check for if it is a round collision or not, and uses respective formula//
+    let r1s=(r1.width,r1.height)/2
+    let r2s=(r2.width+r2.height)/2
     var dx=(r1.x+r1w/2)-(r2.x+r2.width/2);
     var dy=(r1.y+r1h/2)-(r2.y+r2.height/2);
-    var width=(r1w+r2.width)/2;
-    var height=(r1h+r2.height)/2;
+    var width=(r1s+r2s)/2;
+    var height=(r1s+r2s)/2;
     //
     var crossWidth=width*dy;
     var crossHeight=height*dx;

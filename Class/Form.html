@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="Author" content="Roger T. Grange">
+    
+    <meta name="description"
+        content="Form">
+    
+    <meta property="og:image" content="">
+    <meta property="og:title" content="">
+    <meta property="og:description" content="">
+    <style>.textArea{resize: none;}</style>
+    <title>Doc</title>
+</head>
+<body style="width: 100%; height: 100%;">
+    <form style="width: 33%; position:absolute; left: 50%; top: 50%; margin-left:-16.5%; margin-top: -12.5%;">
+        <fieldset>
+        <legend>USER JOIN</legend>
+        <label for="User">PilotID:</label>
+            <input placeholder="Player" type="text" id="User" name="user.id" hid>
+            <br>
+            <label for="Password">Sector Access Code:</label>
+            <input placeholder="0000" type="text" id="Password" name="user.password.id">
+            <br>
+
+            <label for="ship"></label>
+                <fieldset id="ship">
+                    <legend>Ship</legend>
+                    <input type="radio" name="ship" id="ship0" name="HDP-001">
+                    <label for="ship0">HDP-001</label>
+                    <input type="radio" name="ship" id="ship1" name="HSM-052">
+                    <input type="radio" name="ship" id="ship2" name="EX-001">
+                </fieldset>
+            <br>
+            
+            <label for="jointext">Join Message:</label>
+            <br>
+            <label for="test">Image</label>
+            <input id="test" type="file" accept="image/jpg, image/jpeg">
+            <br>
+            <textarea class="textArea" id="jointext" cols="15" rows="2" placeholder="has joined" name="join.message" readonly maxlength="32"></textarea>
+            <br>
+                <button type="reset">RESET</button>
+                <button type="Submit">Enter Sector</button>
+            <br>
+            <fieldset id="symptoms">
+                <legend>SYMPTOMS</legend>
+                <input type="checkbox" name="symp0" id="symptoms">
+                <label for="symp0">Runny Nose</label>
+                <input type="checkbox" name="symp1" id="symptoms">
+                <label for="symp1">Coughing</label>
+                <input type="checkbox" name="symp2" id="symptoms">
+                <label for="symp2">Restlessness</label>
+                <input type="checkbox" name="symp3" id="symptoms">
+                <label for="symp3">Vomiting</label>
+            </fieldset>
+        </fieldset>
+    </form>
+</body>
+</html>

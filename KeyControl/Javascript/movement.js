@@ -36,8 +36,10 @@ document.addEventListener('readystatechange', event => {
     if (event.target.readyState === "complete") {
         collObj = document.getElementById("collisionObjects").children
         movement = window.setInterval(move,40)
-        document.getElementById("ammo").style.top=window.innerHeight/2-32+"px"
-        document.getElementById("ammo").style.left = -window.innerWidth/2-128+"px"
+        document.getElementById("Bottom").style.top=window.innerHeight/2-80+"px"
+        document.getElementById("Bottom").style.left = -window.innerWidth/2-128+"px"
+        document.getElementById("Bottom").style.width = window.innerWidth-16+"px"
+        document.getElementById("Bottom").style.height = 64+"px"
     }
 });
 //Checks mouse position//
@@ -118,8 +120,6 @@ function move(){
     for (let i = 0; i < collObj.length; i++){
         //checks if the shape is within 20 pixels of player before doing the math
         collisionside = (((Math.abs(MousePoint.y-collObj[i].children[0].y)-20<collObj[i].children[0].height)?((Math.abs(MousePoint.x-collObj[i].children[0].x)-20<collObj[i].children[0].width)):false)?collide(MousePoint,collObj[i].children[0],collObj[i].title.split(",")):"none")
-        movey = ((collisionside=="top"&&movey>0)?0:(collisionside=="bottom"&&movey<0)?0:movey)
-        movex = ((collisionside=="left"&&movex>0)?0:(collisionside=="right"&&movex<0)?0:movex)
     };
     
     //applies motion to position//
@@ -134,10 +134,10 @@ function move(){
     MousePoint.style.transform = "rotate("+faceAngle+"deg"+")"
     
     //scrolls to keep centered except at edges of game area//
-    window.scroll(Math.min(cx-window.innerWidth/2,3072-window.innerWidth),Math.min(cy-window.innerHeight/2,2056-window.innerHeight))
+    window.scroll(Math.min(cx-window.innerWidth/2,3072-window.innerWidth),Math.min(cy-window.innerHeight/2,2140-window.innerHeight))
     mouseposX=mousebaseX+scrollX;mouseposY=mousebaseY+scrollY
-    document.getElementById("ammo").style.top=scrollY+window.innerHeight-64+"px"
-    document.getElementById("ammo").style.left=scrollX-64+"px"
+    document.getElementById("Bottom").style.top=scrollY+window.innerHeight-80+"px"
+    document.getElementById("Bottom").style.left=scrollX+"px"
     //sets background parallax effect for 2 layers, used three before, was a bit unecessary as it looked fine otherwise//
     document.getElementById("Parallax").children[0].style.top = -scrollY*0.0625-32+"px"
     document.getElementById("Parallax").children[0].style.left = -scrollX*0.0625-32+"px"
