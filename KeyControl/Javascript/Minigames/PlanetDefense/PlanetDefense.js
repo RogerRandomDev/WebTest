@@ -188,7 +188,7 @@ function Stage1(){
 
         movey = ((dist<120?10*Math.sin((rotation*Math.PI/180)):10*Math.sin((rotation*Math.PI/180)-Math.PI/2)))
         movex = ((dist<120?10*Math.cos((rotation*Math.PI/180)):10*Math.cos((rotation*Math.PI/180)-Math.PI/2)))
-        if(dist<512 && canCharge){canCharge=false;window.clearInterval(moveinterval);moveInterval=window.setInterval(Stage1Charge,5); chargeFrame = 0}
+        if(dist<512 && canCharge){canCharge=false;window.clearInterval(moveinterval);moveInterval=window.setInterval(Stage1Charge,10); chargeFrame = 0}
         element.attributes.pos[0] += movex
         element.attributes.pos[1] += movey
 
@@ -197,11 +197,11 @@ function Stage1(){
 
         element.style.transform = "rotate("+rotation+"deg)"
 }
-let pPosx=0,pPosy=0,rotation=0;
+let pPosx=0,pPosy=0,rotation=0,resetInterval;
 function Stage1Charge(){
     if(chargeFrame==0){rotation = Math.round((Math.atan2(cy+40-element.style.top.split('px')[0]-1+1,cx-20-element.style.left.split('px')[0]-1+1)+Math.PI/2)*(180/Math.PI)/2)*2}
-    if(chargeFrame<50){
-        chargeFrame++
+    if(chargeFrame <=60){chargeFrame++}
+    if(chargeFrame>=20 && chargeFrame<60){
         let movex = 0,movey = 0;
 
         movey = (10*Math.sin((rotation*Math.PI/180)-Math.PI/2))
@@ -214,11 +214,8 @@ function Stage1Charge(){
         element.style.left = element.attributes.pos[0]+"px"
 
         element.style.transform = "rotate("+rotation+"deg)"
-        if(chargeFrame>=50){window.clearInterval(moveinterval);moveinterval = window.setInterval(Stage1,50);window.setTimeout(resetCharge,1500)}
     }
-}
-function resetCharge(){
-    canCharge = true
+    if(chargeFrame>=60){window.clearInterval(moveInterval);moveInterval = window.setInterval(Stage1,50);window.setTimeout(function(){canCharge = true},3000)}
 }
 //end of stages//
 
