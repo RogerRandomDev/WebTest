@@ -187,9 +187,9 @@ function Stage1(){
         rotation = Math.round((Math.atan2(pPosy+40-element.style.top.split('px')[0]-1+1,pPosx-20-element.style.left.split('px')[0]-1+1)+Math.PI/2)*(180/Math.PI)/2)*2
         let dist = Math.sqrt(Math.pow(cx-element.attributes.pos[0],2)+Math.pow(cy-element.attributes.pos[1],2))
 
-        movey = ((dist<120?10*Math.sin((rotation*Math.PI/180)):10*Math.sin((rotation*Math.PI/180)-Math.PI/2)))
-        movex = ((dist<120?10*Math.cos((rotation*Math.PI/180)):10*Math.cos((rotation*Math.PI/180)-Math.PI/2)))
-        if(dist<512 && canCharge){canCharge=false;window.clearInterval(moveinterval);MiscInterval=window.setInterval(Stage1Charge,10); chargeFrame = 0; window.setTimeout(function(){canCharge = true;},3000)}
+        movey = ((dist<240?10*Math.sin((rotation*Math.PI/180)):10*Math.sin((rotation*Math.PI/180)-Math.PI/2)))
+        movex = ((dist<240?10*Math.cos((rotation*Math.PI/180)):10*Math.cos((rotation*Math.PI/180)-Math.PI/2)))
+        if(dist<768 && canCharge){canCharge=false;window.clearInterval(moveinterval);MiscInterval=window.setInterval(Stage1Charge,5); chargeFrame = 0; window.setTimeout(function(){canCharge = true;},3000)}
 
         element.attributes.pos[0] += movex
         element.attributes.pos[1] += movey
@@ -223,8 +223,8 @@ function Stage1Charge(){
 */
 function Stage1Charge(){
     if(chargeFrame==0){rotation = Math.round((Math.atan2(cy+40-element.style.top.split('px')[0]-1+1,cx-20-element.style.left.split('px')[0]-1+1)+Math.PI/2)*(180/Math.PI)/2)*2}
-    if(chargeFrame <=60){chargeFrame++}
-    if(chargeFrame>=20 && chargeFrame<60){
+    if(chargeFrame <=100){chargeFrame++}
+    if(chargeFrame>=40 && chargeFrame<100){
         let movex = 0,movey = 0;
 
         movey = (10*Math.sin((rotation*Math.PI/180)-Math.PI/2))
@@ -240,7 +240,7 @@ function Stage1Charge(){
         let colliding = collide(document.getElementById("MousePoint"),element)
         if(colliding !="none" && chargeFrame%2 == 1){document.getElementById("MousePoint").setAttribute('health',document.getElementById("MousePoint").getAttribute('health')-1)}
     }
-    if(chargeFrame>=60){window.clearInterval(MiscInterval);window.clearInterval(moveinterval);moveinterval = window.setInterval(Stage1,50)}
+    if(chargeFrame>=100){window.clearInterval(MiscInterval);window.clearInterval(moveinterval);moveinterval = window.setInterval(Stage1,50)}
 }
 //end of stages//
 
@@ -291,7 +291,7 @@ function portalanim(){
     if(frame>=150 && frame<190){document.getElementsByClassName("enemyOrbs")[2].style.transform = "scaleX("+(frame-150)/40+") scaleY("+(frame-150)/40+")"}
 //    if(frame>=155 && frame<195){document.getElementsByClassName("enemyOrbs")[3].style.transform = "scaleX("+(frame-155)/40+") scaleY("+(frame-155)/40+")"}
 //    if(frame>=160 && frame<200){document.getElementsByClassName("enemyOrbs")[4].style.transform = "scaleX("+(frame-160)/40+") scaleY("+(frame-160)/40+")"}
-    if(frame==280){clearInterval(animation);;loadMotion();moveinterval=window.setInterval(Stage0,50);document.getElementById("ROOT").style.scrollBehavior = "initial";document.getElementById("portal").remove();shieldInterval = window.setTimeout(shieldSwap,3000-(2000*(currentOrbs/5)))}
+    if(frame==280){clearInterval(animation);;loadMotion();moveinterval=window.setInterval(Stage0,50);document.getElementById("ROOT").style.scrollBehavior = "initial";document.getElementById("portal").remove();shieldInterval = window.setTimeout(shieldSwap,5)}
 }
 //shield swapping between on and off//
 function shieldSwap(){

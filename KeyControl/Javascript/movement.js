@@ -103,8 +103,11 @@ function keyPressed(keyid) {
         }
     }
     if(keyid.key==" " && rapidjump){
-        cx += 512*Math.cos((faceAngle-90)*deg2rad)
-        cy += 512*Math.sin((faceAngle-90)*deg2rad)
+        let rotMult = keyspressed.slice(2,4).filter((v) => (v==true)).length
+        let rotChange = -(keyspressed[0]*180)
+        if(rotMult!=0){rotChange+=(-keyspressed[2]*90/rotMult)+(keyspressed[3]*90/rotMult)}
+        cx += 512*Math.cos((faceAngle-90+rotChange)*deg2rad)
+        cy += 512*Math.sin((faceAngle-90+rotChange)*deg2rad)
         rapidjump=false
         window.setTimeout(function(){rapidjump=true},1500)
     }
