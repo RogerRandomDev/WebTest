@@ -198,6 +198,27 @@ function Stage1(){
         element.style.transform = "rotate("+rotation+"deg)"
 }
 let pPosx=0,pPosy=0,rotation=0,resetInterval;
+/*emergenct boss fight here
+function Stage1Charge(){
+    if(chargeFrame==0){rotation = Math.round((Math.atan2(cy+40-element.style.top.split('px')[0]-1+1,cx-20-element.style.left.split('px')[0]-1+1)+Math.PI/2)*(180/Math.PI)/2)*2}
+    if(chargeFrame <=60){chargeFrame++}
+    if(chargeFrame>=20 && chargeFrame<60){
+        let movex = 0,movey = 0;
+
+        movey = (10*Math.sin((rotation*Math.PI/180)-Math.PI/2))
+        movex = (10*Math.cos((rotation*Math.PI/180)-Math.PI/2))
+
+        element.attributes.pos[0] += movex
+        element.attributes.pos[1] += movey
+
+        element.style.top = element.attributes.pos[1]+"px"
+        element.style.left = element.attributes.pos[0]+"px"
+
+        element.style.transform = "rotate("+rotation+"deg)"
+    }
+    if(chargeFrame>=60){window.clearInterval(moveInterval);moveInterval = window.setInterval(Stage1,50);window.setTimeout(function(){canCharge = true},3000)}
+}
+*/
 function Stage1Charge(){
     if(chargeFrame==0){rotation = Math.round((Math.atan2(cy+40-element.style.top.split('px')[0]-1+1,cx-20-element.style.left.split('px')[0]-1+1)+Math.PI/2)*(180/Math.PI)/2)*2}
     if(chargeFrame <=60){chargeFrame++}
