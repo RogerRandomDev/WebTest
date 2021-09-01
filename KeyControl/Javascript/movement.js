@@ -3,6 +3,7 @@ document.addEventListener('keyup',keyReleased)
 document.addEventListener('mousemove',mousePos)
 document.addEventListener('mousedown',mousePressed)
 document.addEventListener('mouseup',mouseReleased)
+window.setInterval(updateBullets,50)
 const deg2rad = Math.PI/180
 let framesTillShoot = 0
 let keyspressed = [false,false,false,false]
@@ -36,12 +37,34 @@ document.addEventListener('readystatechange', event => {
     if (event.target.readyState === "complete") {
         collObj = document.getElementById("collisionObjects").children
         movement = window.setInterval(move,40)
-        document.getElementById("Bottom").style.top=window.innerHeight/2-80+"px"
-        document.getElementById("Bottom").style.left = -window.innerWidth/2-128+"px"
-        document.getElementById("Bottom").style.width = window.innerWidth-16+"px"
+        document.getElementById("Bottom").style.top=window.innerHeight-80+"px"
+        document.getElementById("Bottom").style.left = -window.innerWidth-128+"px"
+        document.getElementById("Bottom").style.width = window.innerWidth/0.75-16+"px"
         document.getElementById("Bottom").style.height = 64+"px"
     }
 });
+//update Bullets//
+//Bullet Updates//
+function updateBullets(){
+    for(const element of document.getElementsByClassName("bullet")){
+        
+        element.setAttribute("framesleft",element.getAttribute("framesleft")-1)
+        if(element.getAttribute("framesleft")<=-40 && element.hasAttribute("forever") == false){element.remove()}
+        
+        let dirmult = 1
+        if(element.hasAttribute("forever")){dirmult = Math.max(1-(Math.abs(element.getAttribute('framesLeft'))-15)/25,0)}
+        
+        element.attributes.position[0] -= dirmult*(24*Math.sin((element.attributes.angle+90)*Math.PI/180))
+        element.attributes.position[1] -= dirmult*(24*Math.cos((element.attributes.angle+90)*Math.PI/180))
+        element.style.top = element.attributes.position[0]+20+"px"
+        element.style.left = element.attributes.position[1]+20+"px"
+        
+        for(const targets of document.getElementsByClassName(element.attributes.target)){
+            let collision = collide(element,targets)
+            if(collision!="none"){if(targets.hasAttribute("shielded")){if(targets.getAttribute("shielded") == 'false'){targets.setAttribute("health",targets.getAttribute("health")-1)}}else{targets.setAttribute("health",targets.getAttribute("health")-1)};element.remove()}
+        }
+    }
+}
 //Checks mouse position//
 function mousePos(pos){
     mousebaseX=pos.clientX
@@ -125,8 +148,8 @@ function move(){
     //applies motion to position//
     cx += movex;
     cy += movey;
-    cx = (Math.max(8,Math.min(3044,cx)))
-    cy = (Math.max(8, Math.min(1980,cy)))
+    cx = (Math.max(8,Math.min(4096/0.75,cx)))
+    cy = (Math.max(8, Math.min(2128,cy)))
     positioner.style.top = cy + "px"
     positioner.style.left = cx + "px"
     
@@ -134,10 +157,10 @@ function move(){
     MousePoint.style.transform = "rotate("+faceAngle+"deg"+")"
     
     //scrolls to keep centered except at edges of game area//
-    window.scroll(Math.min(cx-window.innerWidth/2,3072-window.innerWidth),Math.min(cy-window.innerHeight/2,2140-window.innerHeight))
-    mouseposX=mousebaseX+scrollX;mouseposY=mousebaseY+scrollY
-    document.getElementById("Bottom").style.top=scrollY+window.innerHeight-80+"px"
-    document.getElementById("Bottom").style.left=scrollX+"px"
+    window.scroll(Math.min((cx-window.innerWidth/2),4096-window.innerWidth)*0.75,Math.min((cy-window.innerHeight/2),2048-window.innerHeight)*0.75)
+    mouseposX=(mousebaseX+scrollX)/0.75;mouseposY=(mousebaseY+scrollY)/0.75
+    document.getElementById("Bottom").style.top=(scrollY+window.innerHeight)/0.75-80+"px"
+    document.getElementById("Bottom").style.left=scrollX/0.75+"px"
     //sets background parallax effect for 2 layers, used three before, was a bit unecessary as it looked fine otherwise//
     document.getElementById("Parallax").children[0].style.top = -scrollY*0.0625-32+"px"
     document.getElementById("Parallax").children[0].style.left = -scrollX*0.0625-32+"px"
