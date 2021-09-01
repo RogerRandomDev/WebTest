@@ -92,7 +92,7 @@ function placeEnemies(){
         enemy.attributes.pos = [startpoint[0]+window.innerWidth/2,startpoint[1]+window.innerHeight/2]
         enemy.style.left = enemy.attributes.pos[0] +"px"
         enemy.style.top =  enemy.attributes.pos[1]+"px"
-        currentOrbs = 1
+        currentOrbs = 3
         enemy.id = "ShieldedBoss"
         enemy.setAttribute("shielded",false)
         for(let i = 0; i<currentOrbs;i++){
@@ -189,7 +189,7 @@ function Stage1(){
 
         movey = ((dist<240?10*Math.sin((rotation*Math.PI/180)):10*Math.sin((rotation*Math.PI/180)-Math.PI/2)))
         movex = ((dist<240?10*Math.cos((rotation*Math.PI/180)):10*Math.cos((rotation*Math.PI/180)-Math.PI/2)))
-        if(dist<768 && canCharge){canCharge=false;window.clearInterval(moveinterval);MiscInterval=window.setInterval(Stage1Charge,5); chargeFrame = 0; window.setTimeout(function(){canCharge = true;},3000)}
+        if(dist<768 && canCharge){canCharge=false;window.clearInterval(moveinterval);MiscInterval=window.setInterval(Stage1Charge,5); chargeFrame = 0; window.setTimeout(function(){canCharge = true;},1500)}
 
         element.attributes.pos[0] += movex
         element.attributes.pos[1] += movey
@@ -221,14 +221,15 @@ function Stage1Charge(){
     if(chargeFrame>=60){window.clearInterval(moveInterval);moveInterval = window.setInterval(Stage1,50);window.setTimeout(function(){canCharge = true},3000)}
 }
 */
+let playerhit = 0
 function Stage1Charge(){
-    if(chargeFrame==0){rotation = Math.round((Math.atan2(cy+40-element.style.top.split('px')[0]-1+1,cx-20-element.style.left.split('px')[0]-1+1)+Math.PI/2)*(180/Math.PI)/2)*2}
-    if(chargeFrame <=100){chargeFrame++}
-    if(chargeFrame>=40 && chargeFrame<100){
+    if(chargeFrame==0){rotation = Math.round((Math.atan2(cy+40-element.style.top.split('px')[0]-1+1,cx-20-element.style.left.split('px')[0]-1+1)+Math.PI/2)*(180/Math.PI)/2)*2;playerhit=0}
+    if(chargeFrame <=120){chargeFrame++}
+    if(chargeFrame>=20 && chargeFrame<120){
         let movex = 0,movey = 0;
 
-        movey = (10*Math.sin((rotation*Math.PI/180)-Math.PI/2))
-        movex = (10*Math.cos((rotation*Math.PI/180)-Math.PI/2))
+        movey = (10*Math.sin((rotation*Math.PI/180)-Math.PI/2))*Math.min((120-chargeFrame)/40,1)
+        movex = (10*Math.cos((rotation*Math.PI/180)-Math.PI/2))*Math.min((120-chargeFrame)/40,1)
 
         element.attributes.pos[0] += movex
         element.attributes.pos[1] += movey
@@ -238,9 +239,9 @@ function Stage1Charge(){
 
         element.style.transform = "rotate("+rotation+"deg)"
         let colliding = collide(document.getElementById("MousePoint"),element)
-        if(colliding !="none" && chargeFrame%2 == 1){document.getElementById("MousePoint").setAttribute('health',document.getElementById("MousePoint").getAttribute('health')-1)}
+        if(colliding !="none" && playerhit<=4){document.getElementById("MousePoint").setAttribute('health',document.getElementById("MousePoint").getAttribute('health')-5);playerhit++}
     }
-    if(chargeFrame>=100){window.clearInterval(MiscInterval);window.clearInterval(moveinterval);moveinterval = window.setInterval(Stage1,50)}
+    if(chargeFrame>=120){window.clearInterval(MiscInterval);window.clearInterval(moveinterval);moveinterval = window.setInterval(Stage1,50)}
 }
 //end of stages//
 

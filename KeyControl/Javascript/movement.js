@@ -53,7 +53,7 @@ function updateBullets(){
         if(element.getAttribute("framesleft")<=-40 && element.hasAttribute("forever") == false){element.remove()}
         
         let dirmult = 1
-        if(element.hasAttribute("forever")){dirmult = Math.max(1-(Math.abs(element.getAttribute('framesLeft'))-15)/25,0)}
+        if(element.hasAttribute("forever")){dirmult = Math.max(2-(Math.abs(element.getAttribute('framesLeft'))-5)/5,0)}
         
         element.attributes.position[0] -= dirmult*(24*Math.sin((element.attributes.angle+90)*Math.PI/180))
         element.attributes.position[1] -= dirmult*(24*Math.cos((element.attributes.angle+90)*Math.PI/180))
@@ -103,13 +103,16 @@ function keyPressed(keyid) {
         }
     }
     if(keyid.key==" " && rapidjump){
-        let rotMult = keyspressed.slice(2,4).filter((v) => (v==true)).length
-        let rotChange = -(keyspressed[0]*180)
-        if(rotMult!=0){rotChange+=(-keyspressed[2]*90/rotMult)+(keyspressed[3]*90/rotMult)}
-        cx += 512*Math.cos((faceAngle-90+rotChange)*deg2rad)
-        cy += 512*Math.sin((faceAngle-90+rotChange)*deg2rad)
+        let rotMult = keyspressed.filter((v) => (v==true)).length
+        let rotChange = (keyspressed[1]*360)-(keyspressed[0]*180)
+
+        if(rotMult!=0 && rotChange==360){rotChange+=(-keyspressed[2]*90/rotMult)+(keyspressed[3]*90/rotMult)}
+        if(rotMult!=0 && rotChange==-180){rotChange+=(keyspressed[2]*90/rotMult)+(-keyspressed[3]*90/rotMult)}
+        if(rotChange==0){rotChange+=(-keyspressed[2]*90)+(keyspressed[3]*90)}
+        cx += 128*Math.cos((faceAngle-90+rotChange)*deg2rad)
+        cy += 128*Math.sin((faceAngle-90+rotChange)*deg2rad)
         rapidjump=false
-        window.setTimeout(function(){rapidjump=true},1500)
+        window.setTimeout(function(){rapidjump=true},1000)
     }
 }
 //loads player base function//
@@ -169,7 +172,7 @@ function move(){
     MousePoint.style.transform = "rotate("+faceAngle+"deg"+")"
     
     //scrolls to keep centered except at edges of game area//
-    window.scrollBy(lerp(scrollX,cx*0.75-window.innerWidth/2,0.25)-scrollX,(lerp(scrollY,cy*0.75-window.innerHeight/2,0.25)-scrollY))
+    window.scrollBy(lerp(scrollX,cx*0.75-window.innerWidth/2,0.125)-scrollX,(lerp(scrollY,cy*0.75-window.innerHeight/2,0.125)-scrollY))
     window.scroll(Math.min(scrollX,3096-window.innerWidth/0.75),Math.min(scrollY,2048-window.innerHeight/0.75))
     mouseposX=(mousebaseX+scrollX)/0.75;mouseposY=(mousebaseY+scrollY)/0.75
     document.getElementById("Bottom").style.top=(scrollY+window.innerHeight)/0.75-80+"px"
