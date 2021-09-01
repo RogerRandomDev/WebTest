@@ -20,6 +20,7 @@ var px=0,py=0;
 var cx=1024,cy=1024;
 let mouseposX = 0,mouseposY = 0,mousebaseX=0,mousebaseY=0;
 var movement
+let rapidjump = true
 let Pbullet = document.createElement("img")
 Pbullet.className="bullet"
 Pbullet.src="./Images/MiniGames/PlanetDefense/ShipBullet.png"
@@ -101,6 +102,12 @@ function keyPressed(keyid) {
             if(collisionside !="none"){enterPlanet(collObj[i].title.split(","))}
         }
     }
+    if(keyid.key==" " && rapidjump){
+        cx += 512*Math.cos((faceAngle-90)*deg2rad)
+        cy += 512*Math.sin((faceAngle-90)*deg2rad)
+        rapidjump=false
+        window.setTimeout(function(){rapidjump=true},1500)
+    }
 }
 //loads player base function//
 function loadMotion(){
@@ -140,6 +147,8 @@ function move(){
     
     
     //checks collision with all objects, could probably be more efficient to be honest, but that can be done later//
+    TextArea.style.color = "rgba( 75, 75, 75, 0)"
+    TextArea.textContent = "a"
     for (let i = 0; i < collObj.length; i++){
         //checks if the shape is within 20 pixels of player before doing the math
         collisionside = (((Math.abs(MousePoint.y-collObj[i].children[0].y)-20<collObj[i].children[0].height)?((Math.abs(MousePoint.x-collObj[i].children[0].x)-20<collObj[i].children[0].width)):false)?collide(MousePoint,collObj[i].children[0],collObj[i].title.split(",")):"none")
@@ -157,7 +166,8 @@ function move(){
     MousePoint.style.transform = "rotate("+faceAngle+"deg"+")"
     
     //scrolls to keep centered except at edges of game area//
-    window.scroll(Math.min((cx-window.innerWidth/2),4096-window.innerWidth)*0.75,Math.min((cy-window.innerHeight/2),2048-window.innerHeight)*0.75)
+    window.scrollBy(lerp(scrollX,cx*0.75-window.innerWidth/2,0.25)-scrollX,(lerp(scrollY,cy*0.75-window.innerHeight/2,0.25)-scrollY))
+    window.scroll(Math.min(scrollX,3096-window.innerWidth/0.75),Math.min(scrollY,2048-window.innerHeight/0.75))
     mouseposX=(mousebaseX+scrollX)/0.75;mouseposY=(mousebaseY+scrollY)/0.75
     document.getElementById("Bottom").style.top=(scrollY+window.innerHeight)/0.75-80+"px"
     document.getElementById("Bottom").style.left=scrollX/0.75+"px"
@@ -181,3 +191,5 @@ function shootBullets(angle,position,element){
     newbullet.attributes.target="enemyBase"
     document.getElementById("Misc").appendChild(newbullet)
 }
+//interpolation function
+function lerp(Pos1,Pos2,Value){return Pos1 * (1 - Value) + Pos2 * Value}

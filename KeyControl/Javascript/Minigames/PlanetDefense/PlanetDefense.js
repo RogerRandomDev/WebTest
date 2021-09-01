@@ -143,7 +143,7 @@ function Stage0(){
             //window.clearTimeout(shieldInterval)
             element.setAttribute("shielded","false")
             shieldSwap()
-            if(currentOrbs==0){window.clearInterval(moveinterval);loadStage(1)}
+            if(currentOrbs==0){window.clearInterval(moveinterval); moveinterval = window.setInterval(Stage1,50)}
         }}
         rotation = Math.round((Math.atan2(pPosy+40-element.style.top.split('px')[0]-1+1,pPosx-20-element.style.left.split('px')[0]-1+1)+Math.PI/2)*(180/Math.PI)/5)*5
         let dist = Math.sqrt(Math.pow(cx-element.attributes.pos[0],2)+Math.pow(cy-element.attributes.pos[1],2))
@@ -179,6 +179,7 @@ function Stage0(){
         if(collision!=='none'){shieldSwap();Diffuser.remove()}}
 }
 //Stage 1, enemy will charge at player and move faster//
+let MiscInterval
 function Stage1(){
         let movex = 0,movey = 0,rotation = 0;
         let pPosx = cx, pPosy = cy;
@@ -188,7 +189,8 @@ function Stage1(){
 
         movey = ((dist<120?10*Math.sin((rotation*Math.PI/180)):10*Math.sin((rotation*Math.PI/180)-Math.PI/2)))
         movex = ((dist<120?10*Math.cos((rotation*Math.PI/180)):10*Math.cos((rotation*Math.PI/180)-Math.PI/2)))
-        if(dist<512 && canCharge){canCharge=false;window.clearInterval(moveinterval);moveInterval=window.setInterval(Stage1Charge,10); chargeFrame = 0}
+        if(dist<512 && canCharge){canCharge=false;window.clearInterval(moveinterval);MiscInterval=window.setInterval(Stage1Charge,10); chargeFrame = 0; window.setTimeout(function(){canCharge = true;},3000)}
+
         element.attributes.pos[0] += movex
         element.attributes.pos[1] += movey
 
@@ -197,7 +199,7 @@ function Stage1(){
 
         element.style.transform = "rotate("+rotation+"deg)"
 }
-let pPosx=0,pPosy=0,rotation=0,resetInterval;
+let pPosx=0,pPosy=0,rotation=0;
 /*emergenct boss fight here
 function Stage1Charge(){
     if(chargeFrame==0){rotation = Math.round((Math.atan2(cy+40-element.style.top.split('px')[0]-1+1,cx-20-element.style.left.split('px')[0]-1+1)+Math.PI/2)*(180/Math.PI)/2)*2}
@@ -235,19 +237,13 @@ function Stage1Charge(){
         element.style.left = element.attributes.pos[0]+"px"
 
         element.style.transform = "rotate("+rotation+"deg)"
+        let colliding = collide(document.getElementById("MousePoint"),element)
+        if(colliding !="none" && chargeFrame%2 == 1){document.getElementById("MousePoint").setAttribute('health',document.getElementById("MousePoint").getAttribute('health')-1)}
     }
-    if(chargeFrame>=60){window.clearInterval(moveInterval);moveInterval = window.setInterval(Stage1,50);window.setTimeout(function(){canCharge = true},3000)}
+    if(chargeFrame>=60){window.clearInterval(MiscInterval);window.clearInterval(moveinterval);moveinterval = window.setInterval(Stage1,50)}
 }
 //end of stages//
 
-//stage loader//
-function loadStage(stageNum){
-    if(stageNum==1){
-        moveinterval = window.setInterval(Stage1,50)
-    }
-
-
-}
 //other//
 function shootBullet(angle,position,element){
     element.setAttribute("framestillshoot",100)
