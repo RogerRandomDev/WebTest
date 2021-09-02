@@ -1,0 +1,11 @@
+body {
+  background-color: moccasin;
+}
+
+fieldset {
+  width: 512px;
+  background-color: khaki;
+}
+form {
+  width: 512px;
+}

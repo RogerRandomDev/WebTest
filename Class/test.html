@@ -5,8 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        progress::-webkit-progress-bar {background-color: rgb(12.5,37.5,12.5); width: 100%;}
+        progress {background-color: black; color: rgb(50,150,50); border-width: 4px; border-style: solid; border-color: rgb(12.5,25,12.5);}
+    </style>
 </head>
 <body>
-    <progress max="25" value="5" style="color: blue;"></progress>
+    <progress max="100" value="15" min="0"></progress>
 </body>
 </html>

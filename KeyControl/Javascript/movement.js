@@ -62,6 +62,7 @@ function updateBullets(){
         
         for(const targets of document.getElementsByClassName(element.attributes.target)){
             let collision = collide(element,targets)
+            if(collision!="none" && element.hasAttribute("forever")){targets.setAttribute("health",targets.getAttribute("health")-9)}
             if(collision!="none"){if(targets.hasAttribute("shielded")){if(targets.getAttribute("shielded") == 'false'){targets.setAttribute("health",targets.getAttribute("health")-1)}}else{targets.setAttribute("health",targets.getAttribute("health")-1)};element.remove()}
         }
     }
@@ -86,7 +87,7 @@ function mouseReleased(id){
     }
 }
 //Ammo regeneration//
-function regenAmmo(){if(!isShooting && ammoLeft < maxAmmo){ammoLeft++;document.getElementById("ammo").textContent="AMMO:\n"+ammoLeft+"/"+maxAmmo}}
+function regenAmmo(){if(!isShooting && ammoLeft < maxAmmo){ammoLeft++;document.getElementById("ammo").textContent="AMMO:"+ammoLeft+"/"+maxAmmo}}
 ammoregen = window.setInterval(regenAmmo,25)
 
 //Changes if key is active or not//
@@ -143,7 +144,7 @@ function move(){
     faceAngle = (Math.atan2(cx-mouseposX,mouseposY-cy)*180/Math.PI)-180
     if(framesTillShoot>0){framesTillShoot--}
     //fires shot if it can//
-    if(isShooting && framesTillShoot==0 && ammoLeft>0){shootBullets(faceAngle,[cy+40,cx-7.5],null);document.getElementById("ammo").textContent="AMMO:\n"+ammoLeft+"/"+maxAmmo}
+    if(isShooting && framesTillShoot==0 && ammoLeft>0){shootBullets(faceAngle,[cy+40,cx-7.5],null);document.getElementById("ammo").textContent="AMMO:"+ammoLeft+"/"+maxAmmo}
     
     //sets motion amount you can do
     py = Math.min((keyspressed[0] - keyspressed[1]),0.875)*(1-(Math.abs((keyspressed[3] - keyspressed[2]))/3))*10
@@ -182,6 +183,8 @@ function move(){
     document.getElementById("Parallax").children[0].style.left = -scrollX*0.0625-32+"px"
     document.getElementById("Parallax").children[1].style.left = -scrollX*0.03125-332+"px"
     document.getElementById("Parallax").children[1].style.top = -scrollY*0.03125-432+"px"
+    //update health bar//
+    document.getElementById("HealthBar").setAttribute("Value",MousePoint.getAttribute("health"))
 }
 
 //Fires bullets//

@@ -48,7 +48,9 @@
     <!--Base area for info and other neat things i will add-->
     <div id="Bottom" style="position: absolute; background-color:  rgb(12.5,37.5,12.5);border-color:rgb(50,50,50); border-style: solid; border-width: 8px; width: 100%; height: 100%; z-index: 1000000; display: inline;">
         <!--outline with :text-shadow: 2px 2px 0 #fff, -2px 2px 0 #fff, 2px -2px 0 #fff, -2px -2px 0 #fff-->
-        <footer class="text" style="position: absolute; white-space: pre-line; color:rgb(37.5,112.5,37.5); user-select: none; pointer-events: none;" id="ammo">AMMO:<br>25/25</footer>
+        <label for="HealthBar" class="spacetext">Health: </label>
+        <progress id="HealthBar" class="Pbars" max="100" value="100"></progress>
+        <footer class="text" style="position: absolute; white-space: pre-line; color:rgb(37.5,112.5,37.5); user-select: none; pointer-events: none; text-align: left;" id="ammo">AMMO:25/25</footer>
         <a href="../index.html" style="width: 72px; height: 72px; left: 128px;">Return To Dock</a>
     </div>
 </body>
