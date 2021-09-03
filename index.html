@@ -7,8 +7,29 @@
     <title>Document</title>
 </head>
 <body style="display:inline">
-    <h1>SPACE GAME</h1>
-    <img src="./KeyControl\Images\frank.jpeg" width="64px" height="64px">
-    <a href="../WebTest/KeyControl/base.html">Enter Game</a>
+    <form style="width: fit-content;" onsubmit=" window.location.replace('./KeyControl/base.html'); return false;">
+        <fieldset>
+            <legend style="font-size:32px">SPACE GAME</legend>
+            <fieldset>
+                <legend>Launch Point</legend>
+                <input list="StartPoint" id="start" name="user.origin" required onclick="value=''">
+                    <datalist id="StartPoint">
+                        <option value="O20-C05"></option>
+                        <option value="Cu14-Ag23"></option>
+                        <option value="Ar80-O15"></option>
+                        <option value="Eternity"></option>
+                    </datalist>
+                <legend>SHIP</legend>
+                <input list="ShipID" id="Ship" name="user.ship" required onclick="value=''">
+                    <datalist id="ShipID">
+                        <option value="Scout"></option>
+                        <option value="Tank"></option>
+                        <option value="Carrier"></option>
+                        <option value="Fighter"></option>
+                    </datalist>
+            </fieldset>
+            <input type="submit">
+        </fieldset>
+    </form>
 </body>
 </html>

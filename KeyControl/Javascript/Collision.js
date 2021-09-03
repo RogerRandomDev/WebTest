@@ -3,7 +3,8 @@ const collisionTypeInfo = {
 "Supply":"Press E to land on: ",
 "HOME":"Press E to land on: ",
 "INFO":"Press E to land on: ",
-"Defense":"Press E to enter PLANET DEFENSE for: "
+"Defense":"Press E to enter PLANET DEFENSE for: ",
+"SHOP":"Press E to enter the market on: "
 }
 function collide(r1,r2,texttoshow){
     //Does check for if it is a round collision or not, and uses respective formula//

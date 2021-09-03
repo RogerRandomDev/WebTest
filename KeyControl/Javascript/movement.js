@@ -62,8 +62,7 @@ function updateBullets(){
         
         for(const targets of document.getElementsByClassName(element.attributes.target)){
             let collision = collide(element,targets)
-            if(collision!="none" && element.hasAttribute("forever")){targets.setAttribute("health",targets.getAttribute("health")-9)}
-            if(collision!="none"){if(targets.hasAttribute("shielded")){if(targets.getAttribute("shielded") == 'false'){targets.setAttribute("health",targets.getAttribute("health")-1)}}else{targets.setAttribute("health",targets.getAttribute("health")-1)};element.remove()}
+            if(collision!="none"){if(targets.hasAttribute("shielded")){if(targets.getAttribute("shielded") == 'false'){targets.setAttribute("health",targets.getAttribute("health")-1)}}else{targets.setAttribute("health",targets.getAttribute("health")-element.getAttribute("Damage"))};element.remove()}
         }
     }
 }
@@ -192,6 +191,7 @@ function shootBullets(angle,position,element){
     ammoLeft--
     framesTillShoot = 2
     let newbullet = Pbullet.cloneNode()
+    newbullet.attributes.Damage = 1
     newbullet.attributes.angle = angle
     newbullet.style.top = position[0]+"px"
     newbullet.style.left = position[1]+"px"

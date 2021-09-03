@@ -32,15 +32,17 @@
         <div id="TextArea" class="text" style=" top: -8px; left: -160px; color: rgba(0,0,0,0); position:relative">a</div>
         <img class="player" src="./Images/Rocket.png" width="30px" height="40px" id="MousePoint" style="margin:0 auto; image-rendering: pixelated; background-color: transparent; position:absolute; z-index:1000;" health=1000 framestillshoot=0></img>
     </div>
-    <div id="collisionObjects" style="user-select: none; pointer-events: none;">
-        <div class="generateplanet" id="planet0" title="gas,Alpha-02,INFO" style="position:absolute; top:128px; left: 320px"></div>
-        <div class="generateplanet" id="planet1" title="land,O20-C05,HOME" style="position:absolute; top:328px; left: 485px"></div>
-        <div class="generateplanet" id="planet2" title="rock,C05-FE25,Supply" style="position:absolute; top:742px; left: 753px"></div>
-        <div class="generateplanet" id="planet3" title="rock,Cu14-Ag23,Supply" style="position:absolute; top:946px; left: 620px"></div>
-        <div class="generateplanet" id="planet4" title="land,Delta-FC065,Defense" style="position:absolute; top:1760px; left: 620px"></div>
-        <div class="generateplanet" id="planet5" title="rock,Au20-Ag45,Supply" style="position:absolute; top:1324px; left: 820px"></div>
-        <div class="generateplanet" id="planet6" title="rock,Au20-Ag45,Supply" style="position:absolute; top:946px; left: 1200px"></div>
-        <div class="generateplanet" id="planet7" title="rock,Au20-Ag45,Supply" style="position:absolute; top:366px; left: 2620px"></div>
+    <div id="StageData">
+        <div id="collisionObjects" style="user-select: none; pointer-events: none;">
+            <div class="generateplanet" id="planet0" title="gas,Alpha-02,INFO" style="position:absolute; top:128px; left: 320px"></div>
+            <div class="generateplanet" id="planet1" title="land,O20-C05,SHOP" style="position:absolute; top:328px; left: 485px"></div>
+            <div class="generateplanet" id="planet2" title="rock,C05-FE25,Supply" style="position:absolute; top:742px; left: 753px"></div>
+            <div class="generateplanet" id="planet3" title="rock,Cu14-Ag23,Supply" style="position:absolute; top:946px; left: 620px"></div>
+            <div class="generateplanet" id="planet4" title="land,Delta-FC065,Defense" style="position:absolute; top:1760px; left: 620px"></div>
+            <div class="generateplanet" id="planet5" title="gas,Ar80-O15,Supply" style="position:absolute; top:1324px; left: 820px"></div>
+            <div class="generateplanet" id="planet6" title="rock,Fe20-Al74,Supply" style="position:absolute; top:946px; left: 1200px"></div>
+            <div class="generateplanet" id="planet7" title="gas,Xe87-Ne11,Supply" style="position:absolute; top:366px; left: 2620px"></div>
+        </div>
     </div>
     <!--Designated for holding objects during minigames, such as enemies and whatnot-->
     <div id="minigameObjects" style="user-select: none; pointer-events: none;"></div>

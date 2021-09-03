@@ -2,6 +2,7 @@
 //major part of script is likely the enemy movement//
 let enemies = 0
 let score = 0
+let bulletDamage = 10
 //enemy builder//
 let baseEnemy = document.createElement("img")
 baseEnemy.className="enemyBase"
@@ -81,6 +82,7 @@ function startDefense(){
         portalObj.style.transform = "rotate(0deg) scaleX(0) scaleY(0)"
         animation = setInterval(portalanim,20)
         canStart = false
+        bulletDamage = 10
     }
 }
 function placeEnemies(){
@@ -115,6 +117,7 @@ function placeEnemies(){
         element = document.getElementById("ShieldedBoss")
     }
 }
+
 //updates orb rotation//
 function updateOrbs(){
     let i = 0
@@ -143,7 +146,7 @@ function Stage0(){
             //window.clearTimeout(shieldInterval)
             element.setAttribute("shielded","false")
             shieldSwap()
-            if(currentOrbs==0){window.clearInterval(moveinterval); moveinterval = window.setInterval(Stage1,50)}
+            if(currentOrbs==0){window.clearInterval(moveinterval); moveinterval = window.setInterval(Stage1,50);bulletDamage = 2}
         }}
         rotation = Math.round((Math.atan2(pPosy+40-element.style.top.split('px')[0]-1+1,pPosx-20-element.style.left.split('px')[0]-1+1)+Math.PI/2)*(180/Math.PI)/5)*5
         let dist = Math.sqrt(Math.pow(cx-element.attributes.pos[0],2)+Math.pow(cy-element.attributes.pos[1],2))
@@ -189,7 +192,7 @@ function Stage1(){
 
         movey = ((dist<240?10*Math.sin((rotation*Math.PI/180)):10*Math.sin((rotation*Math.PI/180)-Math.PI/2)))
         movex = ((dist<240?10*Math.cos((rotation*Math.PI/180)):10*Math.cos((rotation*Math.PI/180)-Math.PI/2)))
-        if(dist<768 && canCharge){canCharge=false;window.clearInterval(moveinterval);MiscInterval=window.setInterval(Stage1Charge,5); chargeFrame = 0; window.setTimeout(function(){canCharge = true;},500)}
+        if(dist<768 && canCharge){canCharge=false;window.clearInterval(moveinterval);MiscInterval=window.setInterval(Stage1Charge,5); chargeFrame = 0; window.setTimeout(function(){canCharge = true;},1500)}
 
         element.attributes.pos[0] += movex
         element.attributes.pos[1] += movey
@@ -222,11 +225,11 @@ function Stage1Charge(){
 }
 */
 let playerhit = 0
-const chargeframes = 100
+const chargeframes = 120
 function Stage1Charge(){
     if(chargeFrame==0){rotation = Math.round((Math.atan2(cy+40-element.style.top.split('px')[0]-1+1,cx-20-element.style.left.split('px')[0]-1+1)+Math.PI/2)*(180/Math.PI)/2)*2;playerhit=0}
     if(chargeFrame <=chargeframes){chargeFrame++}
-    if(chargeFrame>=20 && chargeFrame<chargeframes){
+    if(chargeFrame>=50 && chargeFrame<chargeframes){
         let movex = 0,movey = 0;
 
         movey = (10*Math.sin((rotation*Math.PI/180)-Math.PI/2))
@@ -250,6 +253,7 @@ function Stage1Charge(){
 function shootBullet(angle,position,element){
     element.setAttribute("framestillshoot",100)
     let newbullet = bullet.cloneNode()
+    newbullet.attributes.Damage = bulletDamage
     newbullet.attributes.position = position
     newbullet.attributes.framesleft = 0
     newbullet.attributes.target = "player"
