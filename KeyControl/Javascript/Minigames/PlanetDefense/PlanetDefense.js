@@ -184,6 +184,7 @@ function Stage0(){
 //Stage 1, enemy will charge at player and move faster//
 let MiscInterval
 function Stage1(){
+        if (element.attributes.health <= 0){playFinish}
         let movex = 0,movey = 0,rotation = 0;
         let pPosx = cx, pPosy = cy;
         

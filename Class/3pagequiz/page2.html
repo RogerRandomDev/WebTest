@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="Author" content="Roger T. Grange">
+
+    <meta name="description" content="FAILURE? WHATS THAT? oh. thats failure.">
+
+    <link rel="icon" href="./images/Portal.png" sizes="any">
+
+    <meta property="og:image" content="QuizImage">
+    <meta property="og:title" content="Quiz">
+    <meta property="og:description" content="Quiz By Roger T. Grange for coding at West-MEC">
+
+    <title>Doc</title>
+</head>
+
+<body background="./images/back.png" style="margin:0 auto; text-align:center">
+    <header>
+        <h2><b><i>QUIZ FOR CLASS</i></b></h2>
+        <nav id="menu">
+            <a href="index.html"><b>Home</b></a>
+            <a href="page1.html"><b>Page1</b></a>
+            <a href="page2.html"><b>Page2</b></a>
+        </nav>
+    </header>
+    <main>
+        <h3>How do you rate this site so far?</h3>
+        <form style="width: 50%; left: 25%; position: absolute">
+            <fieldset>
+                <legend>WEBSITE RATING</legend>
+                <fieldset>
+                    <legend>HOW WOULD YOU RATE THIS WEBSITE</legend>
+                    <label for="great">GREAT</label>
+                    <input type="radio" id="great" title="rating">
+                    <label for="good">GOOD</label>
+                    <input type="radio" id="good" title="rating">
+                    <label for="ok">Ok</label>
+                    <input type="radio" id="ok" title="rating">
+                    <label for="couldbebetter">COULD BE BETER</label>
+                    <input type="radio" id="couldbebetter" title="rating">
+                    <label for="failinggrade">YOU SHALL NOT PASS this class</label>
+                    <input type="radio" id="failinggrade" title="rating">
+                </fieldset>
+                <fieldset>
+                    <legend>WHY WAS THIS YOUR RATING?</legend>
+                    <textarea class="textArea" id="ratingtext" style="resize:none;" maxlength="256" cols="64" rows="8" placeholder="Please dont quote gandalf"></textarea>
+                </fieldset>
+                <fieldset>
+                    <legend>HOW WOULD YOU IMPROVE THIS?</legend>
+                    <textarea class="textArea" id="ratingtext" style="resize:none;" maxlength="256" cols="64" rows="8" placeholder="How could I score better here?"></textarea>
+                </fieldset>
+            </fieldset>
+            <button type="submit">SUBMIT</button>
+        </form>
+    </main>
+</body>

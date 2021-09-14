@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="Author" content="Roger T. Grange">
+
+    <meta name="description" content="Form">
+
+    <meta property="og:image" content="">
+    <meta property="og:title" content="">
+    <meta property="og:description" content="">
+    <link rel="stylesheet" href="./style.css">
+    <title>Doc</title>
+</head>
+
+<body>
+    <div id="datetime" style="width: min-content;"></div>
+    <div class="Menu">
+        
+        <img src="./fear.jpg" class="photo" style="width: 95%; height: 95%;">
+        <div class="name">ROGER GRANGE<br><span style="font-size: larger;"><b>a MAN</b></span></div>
+        <div class="dat0">Height:<span style="font-size: larger;"><b>5'5"</b></span></div>
+        <div class="dat1">Age:<span style="font-size: larger;"><b>16</b></span></div>
+        <div class="dat2">Likes Games, along with designing and making them<br>can cook and enjoys baking deserts</div>
+        <div class="dat3">Adept in programming using JavaScript, HTML, CSS, and the Godot Game Engine</div>
+    </div>
+    <script>
+        var dt = new Date();
+        document.getElementById("datetime").innerHTML = dt.toLocaleString();
+    </script>
+</body>

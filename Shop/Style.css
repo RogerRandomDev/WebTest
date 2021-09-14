@@ -1,0 +1,56 @@
+body {
+  width: 66%;
+  margin-left: 16.5%;
+  margin-right: 16.5%;
+  background-color: black;
+}
+
+button {
+  color: white;
+  background-color: grey;
+  font-size: 16px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  min-height: 64px;
+  border-color: darkgray;
+  border-width: 4px;
+  border-style: solid;
+}
+/*.Menu {
+  position: absolute;
+  width: 66%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+*/
+.Menu {
+  position: absolute;
+  width: 66%;
+  display: grid;
+  grid-template-areas:
+    'header header header .'
+    'main main navbar navbar'
+    'main main article sidebar'
+    'Aside . . sidebar'
+    '. footer footer footer';
+}
+.footer {
+  grid-area: footer;
+}
+.header {
+  grid-area: header;
+}
+.navbar {
+  grid-area: navbar;
+}
+.Aside {
+  grid-area: Aside;
+}
+.main {
+  grid-area: main;
+}
+.article {
+  grid-area: article;
+}
+.sidebar {
+  grid-area: sidebar;
+}

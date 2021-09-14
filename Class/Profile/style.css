@@ -1,0 +1,40 @@
+body {
+  background-color: palegoldenrod;
+}
+
+.Menu {
+  display: grid;
+  position: absolute;
+  width: 75%;
+  height: 80%;
+  grid-template-areas:
+    'photo photo photo name name'
+    'photo photo photo dat0 dat0'
+    'photo photo photo dat1 dat1'
+    'dat2 dat2 dat2 dat2 dat2'
+    'dat3 dat3 dat3 dat3 dat3';
+}
+div {
+  border-style: solid;
+  border-width: 4px;
+  border-color: black;
+  padding: 8px 8px 8px 8px;
+}
+.photo {
+  grid-area: photo;
+}
+.name {
+  grid-area: name;
+}
+.dat0 {
+  grid-area: dat0;
+}
+.dat1 {
+  grid-area: dat1;
+}
+.dat2 {
+  grid-area: dat2;
+}
+.dat3 {
+  grid-area: dat3;
+}
