@@ -3,20 +3,43 @@ body {
 }
 .navbar {
   display: grid;
-  grid-template-areas: 'logo . . ';
-  align-items: center;
-  justify-items: center;
+  grid-template-areas: 
+  'logo img0 img1 img2 img3 signin sale';
+  align-items: stretch;
+  justify-items: stretch;
+  border-style: solid;
+  margin-top: -8px;
+  gap:4px 4px;
+  margin: -8px 0px 0px -6px;
+  border-top: black;
+  border-width: 4px;
+}
+.SideBar {
+  display: grid;
+  grid-template-rows: repeat(7, 1fr);
+  height: auto;
+  gap: auto auto;
+  border-style: solid;
+  border-color: black;
+  border-width: 4px;
+  float: left;
+  margin-left: -6px;
+  width: min-content;
 }
 .Main {
   display: grid;
   width: 66%;
-  margin-left: 16.5%;
-  margin-right: 16.5%;
+  margin-left: 15%;
   grid-template-areas:
     'img5 img0 img1 img2'
-    '. img3 img4 .';
+    'img6 img3 img4 img7';
   align-items: center;
   justify-items: center;
+  background-color: cornflowerblue;
+  border-width: 32px;
+  border-style: solid;
+  padding: 16px;
+  border-color: cornflowerblue;
 }
 img {
   align-items: center;
@@ -28,20 +51,59 @@ img {
   border-color: slateblue;
 }
 .i0 {
+  border-width: 16px;
   grid-area: img0;
 }
 .i1 {
+  border-width: 16px;
   grid-area: img1;
 }
 .i2 {
+  border-width: 16px;
   grid-area: img2;
 }
 .i3 {
+  border-width: 16px;
   grid-area: img3;
 }
 .i4 {
+  border-width: 16px;
   grid-area: img4;
 }
 .i5 {
+  border-width: 16px;
   grid-area: img5;
+}
+.i6{
+  grid-area: img6; 
+  border-width: 16px;
+}
+.i7{
+  grid-area: img7; 
+  border-width: 16px;
+}
+.sale{grid-area:sale; justify-self: right;}
+.logo{grid-area:logo; justify-self: left;}
+.signin{grid-area:signin;
+  border-width: 4px;
+  border-style: solid;
+  border-color: black;
+  width: fit-content;
+justify-self: right;}
+.links{
+  grid-template-areas: 'img0 img1';
+  position:absolute;
+  bottom: 0%;
+  left: 25%;
+}
+.cart{
+  margin-left: 25%;
+  background-color: lightblue;
+  border-style: solid;
+  position:absolute;
+  height: 66%;
+  border-width: 8px;
+  border-color: darkcyan;
+  display: block;
+  width: 50%;
 }
