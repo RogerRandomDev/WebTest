@@ -1,0 +1,47 @@
+body {
+  background-color: skyblue;
+}
+.navbar {
+  display: grid;
+  grid-template-areas: 'logo . . ';
+  align-items: center;
+  justify-items: center;
+}
+.Main {
+  display: grid;
+  width: 66%;
+  margin-left: 16.5%;
+  margin-right: 16.5%;
+  grid-template-areas:
+    'img5 img0 img1 img2'
+    '. img3 img4 .';
+  align-items: center;
+  justify-items: center;
+}
+img {
+  align-items: center;
+  justify-items: center;
+  max-width: 256px;
+  max-height: 256px;
+  border-style: solid;
+  border-width: 4px;
+  border-color: slateblue;
+}
+.i0 {
+  grid-area: img0;
+}
+.i1 {
+  grid-area: img1;
+}
+.i2 {
+  grid-area: img2;
+}
+.i3 {
+  grid-area: img3;
+}
+.i4 {
+  grid-area: img4;
+}
+.i5 {
+  grid-area: img5;
+}

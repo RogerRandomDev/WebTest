@@ -4,15 +4,13 @@ body {
 
 .Menu {
   display: grid;
-  position: absolute;
-  width: 75%;
-  height: 80%;
   grid-template-areas:
     'photo photo photo name name'
     'photo photo photo dat0 dat0'
     'photo photo photo dat1 dat1'
     'dat2 dat2 dat2 dat2 dat2'
     'dat3 dat3 dat3 dat3 dat3';
+  /*  gap: 16px 16px;*/
 }
 div {
   border-style: solid;
@@ -22,6 +20,8 @@ div {
 }
 .photo {
   grid-area: photo;
+  align-items: stretch;
+  justify-content: stretch;
 }
 .name {
   grid-area: name;
