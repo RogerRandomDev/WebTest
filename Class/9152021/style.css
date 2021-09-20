@@ -48,7 +48,7 @@ body {
     object-fit: scale-down;
   }
 }
-/*
+
 @media screen and (min-width: 5000px) {
   .Main {
     display: grid;
@@ -100,4 +100,4 @@ body {
   img {
     justify-self: stretch;
   }
-}*/
+}
