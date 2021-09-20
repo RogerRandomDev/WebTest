@@ -1,54 +1,54 @@
 body {
   background-color: white;
 }
-
-.Main {
-  display: grid;
-  border-color: gray;
-  border-width: 12px;
-  border-style: solid;
-  grid-template-areas:
-    'logo   logo   logo    logo     logo'
-    'logo   logo   logo    logo     logo'
-    'logo   logo   logo    logo     logo'
-    'logo   logo   logo    logo     logo'
-    'facebook masks1 masks2 masks2 mask0'
-    'twitter masks1 masks2 masks2 mask0'
-    'party0 party0 makeup0 costumes0 wigs0'
-    'party0 party0 makeup0 costumes0 wigs0'
-    'musical0 supersale0 supersale0 candy0 hats0'
-    'musical0 supersale0 supersale0 candy0 hats0'
-    'musical0 xmas0 women0 women0 sale0'
-    'props0 xmas0 hall0 hall1 witch0';
-  align-content: stretch;
-  justify-content: stretch;
-  gap: 4px 4px;
-}
-.cart {
-  width: 87.5%;
-  margin-left: auto;
-  margin-right: auto;
-}
-a {
-  color: black;
-  margin-left: 8px;
-  margin-right: 8px;
-}
-.navbar {
-  top: 0%;
-  text-align: center;
-  background-color: burlywood;
-  margin-right: auto;
-  margin-left: auto;
-}
-img {
-  width: 100%;
-  max-height: 100%;
-  justify-self: stretch;
-  object-fit: scale-down;
-}
-
 @media screen and (min-width: 2000px) {
+  .Main {
+    display: grid;
+    border-color: gray;
+    border-width: 12px;
+    border-style: solid;
+    grid-template-areas:
+      'logo   logo   logo    logo     logo'
+      'logo   logo   logo    logo     logo'
+      'logo   logo   logo    logo     logo'
+      'logo   logo   logo    logo     logo'
+      'facebook masks1 masks2 masks2 mask0'
+      'twitter masks1 masks2 masks2 mask0'
+      'party0 party0 makeup0 costumes0 wigs0'
+      'party0 party0 makeup0 costumes0 wigs0'
+      'musical0 supersale0 supersale0 candy0 hats0'
+      'musical0 supersale0 supersale0 candy0 hats0'
+      'musical0 xmas0 women0 women0 sale0'
+      'props0 xmas0 hall0 hall1 witch0';
+    align-content: stretch;
+    justify-content: stretch;
+    gap: 4px 4px;
+  }
+  .cart {
+    width: 87.5%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  a {
+    color: black;
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+  .navbar {
+    top: 0%;
+    text-align: center;
+    background-color: burlywood;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  img {
+    width: 100%;
+    max-height: 100%;
+    justify-self: stretch;
+    object-fit: scale-down;
+  }
+}
+@media screen and (min-width: 5000px) {
   .Main {
     display: grid;
     width: 97.5%;
