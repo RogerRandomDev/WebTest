@@ -48,55 +48,53 @@ body {
     object-fit: scale-down;
   }
 }
-@media screen and (min-width: 513px) {
-  .Main {
-    display: grid;
-    width: 97.5%;
-    position: absolute;
-    margin-top: 32px;
-    margin-left: -4px;
-    border-color: gray;
-    border-width: 16px;
-    border-style: solid;
-    grid-template-areas:
-      'logo   logo   logo    logo     facebook .'
-      'logo   logo   logo    logo     twitter .'
-      'logo   logo   logo    logo     mask0 .'
-      'logo   logo   logo    logo     mask0 .'
-      'party0 party0 makeup0 costumes0 wigs0 .'
-      'party0 party0 makeup0 costumes0 wigs0 .'
-      'party0 party0 makeup0 costumes0 wigs0 .'
-      'party0 party0 makeup0 costumes0 wigs0 .'
-      'musical0 supersale0 supersale0 candy0 hats0 .'
-      'musical0 supersale0 supersale0 candy0 hats0 .'
-      'musical0 xmas0 women0 women0 sale0 .'
-      'props0 xmas0 hall0 hall1 witch0 .'
-      'masks1 masks2 masks2 masks2 . .';
-    align-content: stretch;
-    justify-content: stretch;
-    gap: 4px 4px;
-  }
-  .cart {
-    width: 75%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  a {
-    color: gray;
-    margin-left: 8px;
-    margin-right: 8px;
-  }
-  .navbar {
-    width: 99%;
-    position: absolute;
-    border-color: black;
-    border-style: solid;
-    border-width: 4px;
-    background-color: burlywood;
-    margin-right: auto;
-    margin-left: -4px;
-  }
-  img {
-    justify-self: stretch;
-  }
+.Main {
+  display: grid;
+  width: 97.5%;
+  position: absolute;
+  margin-top: 32px;
+  margin-left: -4px;
+  border-color: gray;
+  border-width: 16px;
+  border-style: solid;
+  grid-template-areas:
+    'logo   logo   logo    logo     facebook .'
+    'logo   logo   logo    logo     twitter .'
+    'logo   logo   logo    logo     mask0 .'
+    'logo   logo   logo    logo     mask0 .'
+    'party0 party0 makeup0 costumes0 wigs0 .'
+    'party0 party0 makeup0 costumes0 wigs0 .'
+    'party0 party0 makeup0 costumes0 wigs0 .'
+    'party0 party0 makeup0 costumes0 wigs0 .'
+    'musical0 supersale0 supersale0 candy0 hats0 .'
+    'musical0 supersale0 supersale0 candy0 hats0 .'
+    'musical0 xmas0 women0 women0 sale0 .'
+    'props0 xmas0 hall0 hall1 witch0 .'
+    'masks1 masks2 masks2 masks2 . .';
+  align-content: stretch;
+  justify-content: stretch;
+  gap: 4px 4px;
+}
+.cart {
+  width: 75%;
+  margin-left: auto;
+  margin-right: auto;
+}
+a {
+  color: gray;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+.navbar {
+  width: 99%;
+  position: absolute;
+  border-color: black;
+  border-style: solid;
+  border-width: 4px;
+  background-color: burlywood;
+  margin-right: auto;
+  margin-left: -4px;
+}
+img {
+  justify-self: stretch;
 }
