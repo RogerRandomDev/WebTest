@@ -1,0 +1,98 @@
+/*Custom Objects*/
+pushbutton {
+  background-color: red;
+  position: relative;
+  width: 28px;
+  height: 28px;
+  transition-duration: 0.2s;
+}
+pushbutton::after {
+  content: ' ';
+  position: absolute;
+  width: 112.5%;
+  height: 117.5%;
+  margin-top: 6.25%;
+  margin-left: -6.25%;
+  background-color: rgba(55, 55, 55, 55);
+  transition-duration: 0.2s;
+  z-index: -2;
+}
+pushbutton::before {
+  content: ' ';
+  position: absolute;
+  width: 100%;
+  height: 114.3%;
+  margin-top: 5%;
+  background-color: rgb(155, 25, 25);
+  transition-duration: 0.2s;
+  z-index: -1;
+}
+pushbutton:hover:after {
+  margin-top: 17.75%;
+}
+pushbutton:hover {
+  margin-top: -5%;
+}
+pushbutton:hover:before {
+  margin-top: 10%;
+}
+pushbutton:active {
+  margin-top: 7.5%;
+}
+pushbutton:active:after {
+  margin-top: -3.75%;
+  height: 112.5%;
+}
+pushbutton:active:before {
+  height: 66%;
+}
+/****/
+flipbutton {
+  width: 32px;
+  height: 32px;
+  position: relative;
+  background-color: blue;
+  transition-duration: 0.2s;
+}
+flipbutton::after {
+  content: 'NO';
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  font-size: small;
+  text-align: center;
+  transition-duration: 0.2s;
+  background-color: red;
+  margin-top: 0%;
+}
+
+flipbutton:before {
+  content: 'YES';
+  background-color: green;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  font-size: small;
+  text-align: center;
+  transform: rotateX(90deg);
+  transition-duration: 0.2s;
+  margin-top: 50%;
+}
+flipbutton:hover:after {
+  transform: rotateX(90deg);
+  margin-top: -50%;
+}
+flipbutton:hover:before {
+  transform: rotateX(0deg) translateZ(0px);
+  margin-top: 0%;
+}
+/*Classes*/
+body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 8px;
+}
+.circle {
+  border-radius: 100000px;
+}

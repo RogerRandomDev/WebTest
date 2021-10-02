@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="Author" content="Roger T. Grange">
+
+    <meta name="description" content="Form">
+
+    <meta property="og:image" content="">
+    <meta property="og:title" content="">
+    <meta property="og:description" content="">
+    <title>Doc</title>
+</head>
+
+<body>
+    <script src="./script.js" type="text/javascript"></script>
+    <form onsubmit="return false">
+        <legend>QUIZ</legend>
+        <fieldset>
+            <legend>Questions</legend>
+            <fieldset>
+                <legend>1+1</legend>
+                <input type="number" id="1+1" autocomplete="off">
+            </fieldset>
+            <fieldset>
+                <legend>-1+1</legend>
+                <input type="number" id="-1+1" autocomplete="off">
+            </fieldset>
+            <fieldset>
+                <legend>who is our greatest teacher</legend>
+                <input type="text" id="teach" autocomplete="off">
+            </fieldset>
+            <fieldset>
+                <legend>What is my purpose</legend>
+                <input type="text" id="butter" autocomplete="off">
+            </fieldset>
+            <fieldset>
+                <legend>What is the Answer to the Ultimate Question of Life, the Universe and Everything</legend>
+                <input type="number" id="life" autocomplete="off">
+            </fieldset>
+        </fieldset>
+        <button onclick="submits()">SUBMIT</button>
+        <div id="answers">GRADE</div>
+    </form>
+</body>
