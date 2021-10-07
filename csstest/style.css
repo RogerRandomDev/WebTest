@@ -160,7 +160,7 @@ rotSwitch::before {
   position: relative;
   min-height: 100vh;
   margin: 0 0 0 0;
-  box-shadow: 0px 4px #bc9deb;
+  box-shadow: 0px 0px 32px #bc9deb;
   background-color: #9e876a;
   display: grid;
   align-items: center;
@@ -179,17 +179,21 @@ rotSwitch::before {
   gap: 3.075%;
   margin-left: auto;
   margin-right: auto;
+  color: #ccebd3;
 }
 div {
   justify-self: stretch;
   align-self: stretch;
   border-style: solid;
   border-width: 0px;
+  color: #ccebd3;
+  box-shadow: 0px 0px 12px black;
 }
 .side {
   grid-area: side;
   background-color: #ebd2b4;
   border-width: 4px;
+  color: #ccebd3;
 }
 .main {
   grid-area: main;
@@ -197,16 +201,33 @@ div {
 }
 .nav {
   grid-area: nav;
-  background-color: #ccebd3;
+  background-color: #ebd2b4;
   border-width: 4px;
 }
 .slideup {
   position: fixed;
   bottom: 0%;
+  transform: translateY(85%);
   transition-duration: 0.25s;
+  min-width: 12.5%;
+  min-height: 33.33%;
+  background-color: white;
+  box-shadow: 0px 0px 12px black;
+  color: black;
+  text-align: center;
+}
+.slideup::before {
+  content: ' ';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: transparent;
 }
 .slideup:hover {
-  transform: translateY(-100%);
+  transform: translateY(0%);
+}
+.slideup > p {
+  position: absolute;
 }
 /*for class assignment*/
 .verge {
