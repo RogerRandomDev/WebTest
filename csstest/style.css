@@ -28,7 +28,7 @@ pushbutton::before {
   z-index: -1;
 }
 pushbutton:hover:after {
-  margin-top: 17.75%;
+  margin-top: 22.75%;
 }
 pushbutton:hover {
   margin-top: -5%;
@@ -37,14 +37,14 @@ pushbutton:hover:before {
   margin-top: 10%;
 }
 pushbutton:active {
-  margin-top: 7.5%;
+  margin-top: 5.5%;
 }
 pushbutton:active:after {
-  margin-top: -3.75%;
-  height: 112.5%;
+  margin-top: -10.5%;
 }
 pushbutton:active:before {
-  height: 66%;
+  margin-top: -5%;
+  height: 100%;
 }
 /****/
 flipbutton {
@@ -87,12 +87,219 @@ flipbutton:hover:before {
   transform: rotateX(0deg) translateZ(0px);
   margin-top: 0%;
 }
-/*Classes*/
-body {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 8px;
+
+/****/
+rollbutton {
+  --a: 0;
+  background-color: gray;
+  position: relative;
+  width: 128px;
+  height: 32px;
+  border-top-right-radius: 32px;
+  border-bottom-right-radius: 32px;
+  transition-duration: 1s;
+  border-color: black;
+  border-style: solid;
+  border-width: 4px;
 }
-.circle {
-  border-radius: 100000px;
+rollbutton::before {
+  content: '';
+  position: absolute;
+  width: 25%;
+  height: 100%;
+  background-color: rgb(155, 25, 25);
+  transition-duration: 1.5s;
+  z-index: 1;
+  margin-left: calc(75% * var(--a));
+  border-radius: calc(50% * var(--a));
+  transform: rotateZ(calc(720deg * var(--a)));
+  z-index: 3;
+}
+/****/
+rotSwitch {
+  --a: 0;
+  background-color: gray;
+  position: relative;
+  width: 96px;
+  height: 32px;
+  border-radius: 32px;
+  transition-duration: 1s;
+  border-color: black;
+  border-style: solid;
+  border-width: 4px;
+}
+rotSwitch::before {
+  content: '';
+  position: absolute;
+  width: 33.333%;
+  height: 100%;
+  background-color: rgb(
+    calc(155 - 120 * var(--a)),
+    calc(25 + 120 * var(--a)),
+    25
+  );
+  transition-duration: 1s;
+  z-index: 1;
+  margin-left: 33.333%;
+  border-top-left-radius: 32px;
+  border-bottom-left-radius: 32px;
+  transform: rotateY(calc(180deg * var(--a))) translateX(-100%);
+  z-index: 3;
+}
+/*Classes*/
+.main {
+  width: 87.5%;
+  min-height: 100%;
+  margin-left: 6.25%;
+  margin-right: 6.25%;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  background-color: #ebd2b4;
+}
+.body {
+  position: relative;
+  min-height: 100vh;
+  margin: 0 0 0 0;
+  box-shadow: 0px 4px #bc9deb;
+  background-color: #9e876a;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  grid-template-areas:
+    'nav nav nav nav nav nav'
+    'main main main main main side'
+    'main main main main main side'
+    'main main main main main side'
+    'main main main main main side'
+    'main main main main main side'
+    'main main main main main side'
+    'main main main main main side'
+    'main main main main main side'
+    '. . . . . .';
+  gap: 3.075%;
+  margin-left: auto;
+  margin-right: auto;
+}
+div {
+  justify-self: stretch;
+  align-self: stretch;
+  border-style: solid;
+  border-width: 0px;
+}
+.side {
+  grid-area: side;
+  background-color: #ebd2b4;
+  border-width: 4px;
+}
+.main {
+  grid-area: main;
+  border-width: 4px;
+}
+.nav {
+  grid-area: nav;
+  background-color: #ccebd3;
+  border-width: 4px;
+}
+.slideup {
+  position: fixed;
+  bottom: 0%;
+  transition-duration: 0.25s;
+}
+.slideup:hover {
+  transform: translateY(-100%);
+}
+/*for class assignment*/
+.verge {
+  display: grid;
+  grid-template-areas:
+    'card0 card0 card1'
+    'card0 card0 card1'
+    'card2 card3 card4'
+    'card5 card6 card7'
+    'next next next'
+    'nextzone nextzone nextzone'
+    'nextzone nextzone nextzone'
+    'nextzone nextzone nextzone'
+    'nextzone nextzone nextzone'
+    'nextzone nextzone nextzone'
+    'nextzone nextzone nextzone'
+    'nextzone nextzone nextzone'
+    'nextzone nextzone nextzone'
+    'nextzone nextzone nextzone'
+    'nextzone nextzone nextzone';
+  width: 75%;
+  margin-left: 12.5%;
+  margin-right: 12.5%;
+  min-height: 100vh;
+  align-items: stretch;
+  justify-items: stretch;
+}
+.verge > div {
+  border-width: 2px;
+  border-color: yellow;
+  color: white;
+  justify-self: stretch;
+  align-self: stretch;
+  min-height: 25vh;
+  background-color: rgb(25, 25, 25);
+}
+.topimg {
+  border-color: yellow;
+  border-width: 2px;
+  color: white;
+  min-height: 37.5vh;
+  width: 87.5%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.navbar {
+  border-color: yellow;
+  border-width: 2px;
+  min-height: 6.25vh;
+  color: white;
+  width: 87.5%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.nextzone {
+  position: relative;
+  width: 75%;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: fit-content;
+  background-color: white;
+  height: fit-content;
+}
+
+.nextzone > div > div {
+  position: relative;
+  margin-left: -27.5%;
+  margin-right: -27.5%;
+  font-size: larger;
+  border-width: 2px;
+  border-color: black;
+  width: fit-content;
+  height: fit-content;
+  min-height: 96px;
+  min-width: 128px;
+  color: black;
+  background-color: gray;
+}
+.nextzone > div {
+  margin-top: 3.125%;
+  margin-bottom: 6.25%;
+  margin-left: 25%;
+  margin-right: 25%;
+  border-top-width: 2px;
+  border-bottom-width: 2px;
+  height: fit-content;
+  justify-content: left;
+  text-align: center;
+  color: black;
+  min-height: 96px;
+  min-width: 128px;
+  background-color: lightgrey;
+}
+.nextzone:first-child {
+  margin-top: 15%;
 }
