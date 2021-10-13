@@ -1,14 +1,9 @@
-let message;
-let login = prompt("LOGIN:")
-switch(login){
-    case 'Employee':message='hello'; break;
-    case 'Director':message='greetings'; break;
-    case '':message='no login'; break;
-    default:message='';break;
-}
-alert(message)
-//business check
-let date = prompt("day");
-if(weekdays.has(date) && time>=9 && time<=17 || !weekdays.has(date)){
-    alert("we're open");
+let input0 = prompt("did you stay up")
+let input1 = prompt("did you play games")
+let input2 = prompt("did you study")
+let input3 = prompt("did you skip breakfast")
+if(input0=="no" && input1=="no" && input2=="yes" && input3=="no"){
+    alert('READY FOR TEST')
+}else{
+    alert("OH NO")
 }
