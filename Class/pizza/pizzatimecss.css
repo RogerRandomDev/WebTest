@@ -10,12 +10,25 @@ form {
   width: 512px;
 }
 @media screen and (max-width: 768px) {
+  body {
+    max-width: 100%;
+    margin: 0 0 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
   form {
     max-width: 100%;
     max-height: 100%;
-    margin: 0 0 0 0;
+    object-fit: scale-down;
+    transform: scale(75%, 75%) translate(-12.5%, -12.5%);
   }
   fieldset {
+    position: relative;
     max-width: 100%;
+    object-fit: scale-down;
+  }
+  input {
+    max-width: fit-content;
   }
 }
