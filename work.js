@@ -1,9 +1,11 @@
-let input0 = prompt("did you stay up")
-let input1 = prompt("did you play games")
-let input2 = prompt("did you study")
-let input3 = prompt("did you skip breakfast")
-if(input0=="no" && input1=="no" && input2=="yes" && input3=="no"){
-    alert('READY FOR TEST')
-}else{
-    alert("OH NO")
+for(let i = 5; i <=11; i++){
+    console.log(i)
+}
+console.log("new loop")
+for(let i = 0; i < 9; i++){
+    console.log("this is nice")
+}
+console.log("new loop")
+for(let i = 11; i >= 1; i=i-2){
+    console.log(i)
 }
